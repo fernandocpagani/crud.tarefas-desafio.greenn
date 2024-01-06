@@ -226,7 +226,6 @@ input {
 }
 
 .left-content:hover .images {
-    margin-top: 14.33vh;
-    ;
+    margin-top: 14.33vh;    
 }
 </style>

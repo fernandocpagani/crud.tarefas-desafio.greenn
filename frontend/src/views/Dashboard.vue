@@ -2,8 +2,11 @@
 
 <Navbar/>
 <div class="main-content">
-<!-- <Menu/> -->
+<Menu/>
+<div class="entrance">
 <Entrance/>
+</div>
+
 
 </div>
     
@@ -27,6 +30,11 @@ export default{
     max-width: 1280px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    
+}
+
+.entrance{
+  ;
 }
     
     

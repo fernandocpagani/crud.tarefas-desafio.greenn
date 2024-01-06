@@ -18,14 +18,19 @@ export default {
 
 <style scoped>
 
+.main-content{
+    width: 293px; 
+    height: 100vh; 
+}
+
 .menu{
-        background-color: gray;
+        background-color: #fafafa;
         width: 293px;
-        height: 100vh;
+       padding: 0;
     }
     
     .first-menu-button{
-        background-color:gray;
+        background-color:#fafafa;
         border: none;
         font-size: 15px;
         font-weight: 600px;
@@ -39,7 +44,7 @@ export default {
     }
     
     .menu-button{
-        background-color:gray;
+        background-color:#fafafa;
         border: none;
         font-size: 15px;
         font-weight: 600px;
