@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="task-field">
-                        <label class="title-task">Ir ao mercado</label>
+                        <label class="title-task"><ModalViewTask/></label>
                         <p class="description">Fazer compra semanal</p>
                         <div class="date-counter">
                             <div class="date">
@@ -57,8 +57,7 @@
                 </div>
 
                 <div class="add-task">
-                    <button class="button-add-task"><img src="../../public/adicionar.jpg" alt="adicionar"> Criar
-                        tarefa</button>
+                    <img src="../../public/adicionar.jpg" alt="adicionar"><ModalNewTask/>
                 </div>
 
             </div>
@@ -69,9 +68,15 @@
 </template>
 
 <script>
+import ModalNewTask from './../components/ModalNewTask.vue'
+import ModalViewTask from './../components/ModalViewTask.vue'
 
 export default {
     name: "Entrance",
+    components: {
+        ModalNewTask,
+        ModalViewTask
+    }
 }
 
 </script>
@@ -124,10 +129,11 @@ input:checked {
 }
 
 .title-task {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     margin-left: 20px;
     line-height: normal;
+    color: #000;
 }
 
 .description {
@@ -196,35 +202,11 @@ input:checked {
     padding: 10px 0;
 }
 
-.sub-checkbox {
-    padding-left: 95px;
-}
-
-.sub-description {
-    font-size: 16px;
-    color: #000000;
-    font-weight: 400;
-    padding: 10px 10px;
-}
-
 .add-task {
     padding: 15px 25px;
     box-sizing: border-box;
     border: solid 1px #e5e5e5;
     border-top: none;
-}
-
-.button-add-task {
-    background-color: #fff;
-    border: none;
-    font-weight: 400;
-    color: #81858e;
-    font-size: 15px;
-}
-
-.button-add-task img {
-    width: 20px;
-    padding-right: 10px;
 }
 
 .task:hover {

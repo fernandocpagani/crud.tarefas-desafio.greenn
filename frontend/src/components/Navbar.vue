@@ -3,11 +3,17 @@
         <div class="nav-content">
             <div class="hand">🤘</div>
 
-            <div>
-                <img class="nav-button" src="../../public/Vector.svg" alt="adicionar">
-                <img class="nav-button" src="../../public/interrogacao.svg" alt="interrogacao">
+            <div class="menu">
+
+                <div class="hidden">
+                    <div><img class="nav-add" src="../../public/Vector.svg" alt="adicionar"></div>
+                    <div class="modal">
+                        <ModalNewTask />
+                    </div>
+                </div>
+                <img class="second-nav-button" src="../../public/interrogacao.svg" alt="interrogacao">
                 <img class="nav-button" src="../../public/sino.svg" alt="sino">
-                <img class="last-nav-button" src="../../public/circulo.svg" alt="letra nome">
+                <img class="nav-button" src="../../public/circulo.svg" alt="letra nome">
             </div>
 
         </div>
@@ -15,8 +21,14 @@
 </template>
 
 <script>
+
+import ModalNewTask from './../components/ModalNewTask.vue'
+
 export default {
     name: "Navbar",
+    components: {
+        ModalNewTask
+    },
 }
 
 </script>
@@ -24,16 +36,16 @@ export default {
 <style scoped>
 nav {
     background-color: #000;
-    width: 100%;    
+    width: 100%;
 }
 
-.nav-content{
+.nav-content {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     height: 70px;
     align-items: center;
-    margin: 0 auto;   
+    margin: 0 auto;
     max-width: 1280px;
 }
 
@@ -42,11 +54,42 @@ nav {
     margin-left: 31px;
 }
 
-.nav-button {
-    margin-right: 45px;
+.menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-.last-nav-button {
-    margin-right: 20px;
+.hidden{
+    align-items: center;
+}
+
+
+.nav-add {
+    transition: 0.5s;
+}
+
+.modal {
+    background-color: #000;
+    display: none;
+    transition: 0.5s;
+}
+
+.hidden:hover .modal {
+    margin-left: 10px;
+    display: block;
+    align-items: center;
+}
+
+.hidden:hover .menu {    
+    align-items: center;
+}
+
+.second-nav-button {
+    padding: 0 22.5px 0 45px;
+}
+
+.nav-button {
+    padding: 0 22.5px;
 }
 </style>
