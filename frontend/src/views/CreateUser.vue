@@ -58,18 +58,18 @@
 
 <style scoped>
 #padding-page {
-    padding: 4.7vh 2.73vw 4.11vh 2.42vw;
-    height: 100vh;
-    width: 100vw;
-    justify-items: center;
+    padding: 31px 61px 27px 31px;
+    height: 657px;
+    width: 1280px;   
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 
 }
 
-#main-container {
-    align-items: center;
-    justify-items: center;
+#main-container {   
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 1280px;
+    grid-template-columns: repeat(2, 1fr);   
 }
 
 .left-content {
@@ -87,7 +87,10 @@
     font-style: normal;
     font-weight: 800;
     line-height: 180%;
-    margin-bottom: 3vh;
+    margin-bottom: 10px;
+    line-height: 49px;
+    letter-spacing: 0em;
+    text-align: left;
 }
 
 .form-group {
@@ -100,8 +103,9 @@ label {
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 180%;
-    margin-top: 3vh;
+    margin-top: 20px;
+    line-height: 29px;
+    text-align: left;
 }
 
 input {
@@ -110,7 +114,7 @@ input {
     font-style: normal;
     font-weight: 400;
     line-height: 180%;
-    margin-top: 1.37vh;
+    margin-top: 9px;
     border: 1px solid #e5e5e5;
     padding-left: 20px;
 }
@@ -119,7 +123,7 @@ input {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 5.3vh;
+    margin-top: 35px;
 }
 
 .white-button {
@@ -149,25 +153,24 @@ input {
 }
 
 .right-content {
-    width: 47.57vw;
-    height: 90.8vh;
-    margin-left: 3.4vw;
+    width: 609px;
+    height: 599px;
+    margin-left: 44px;
     background-color: #f7f7f7;
-
     transition: 0.5;
 }
 
 .hand {
-    padding-top: 14.3vh;
-    margin-left: 5.08vw;
+    padding-top: 60px;
+    margin-left: 65px;
     font-size: 48px;
     border: none;
 }
 
 .right-text {
-    padding-top: 17.6vh;
+    padding-top: 152px;
     margin: 0 auto;
-    width: 40vw;
+    width: 513px;
 }
 
 .title-right-content {
@@ -175,22 +178,23 @@ input {
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    line-height: 150%;
-    margin-bottom: 2.3vh;
+    line-height: 36px;
+    margin-bottom: 15px;
     transition: 0.5;
+    text-align: left;
 }
 
 p {
     color: #000;
     font-size: 16px;
-    font-style: normal;
     font-weight: 400;
-    line-height: 150%;
+    line-height: 24px;
+    text-align: left;
 }
 
 .images {
-    margin-top: 14vh;
-    margin-left: 3.5vw;
+    margin-top: 93px;
+    margin-left: 45px;
     display: flex;
     flex-direction: row;
 }

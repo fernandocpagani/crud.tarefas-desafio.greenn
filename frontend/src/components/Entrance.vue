@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="add-task">
-                    <img src="../../public/adicionar.jpg" alt="adicionar"><ModalNewTask/>
+                    <ModalNewTask/>
                 </div>
 
             </div>
@@ -152,7 +152,7 @@ input:checked {
     color: #d31408;
     background-color: #d314081a;
     padding: 4px 7px;
-    width: 120px;
+    width: 125px;
 }
 
 .date-counter {
@@ -184,7 +184,7 @@ input:checked {
     border: none;
     padding-left: 30px;
     display: none;
-    background-color: #fafafa;
+    background-color:transparent;
     cursor: pointer;
 }
 

@@ -6,14 +6,15 @@
             <div class="menu">
 
                 <div class="hidden">
-                    <div><img class="nav-add" src="../../public/Vector.svg" alt="adicionar"></div>
+                    <img class="nav-add" src="../../public/Vector.svg" alt="adicionar">
                     <div class="modal">
-                        <ModalNewTask />
+                        <ModalNewTask class="a"/>
                     </div>
                 </div>
                 <img class="second-nav-button" src="../../public/interrogacao.svg" alt="interrogacao">
                 <img class="nav-button" src="../../public/sino.svg" alt="sino">
                 <img class="nav-button" src="../../public/circulo.svg" alt="letra nome">
+                
             </div>
 
         </div>
@@ -34,6 +35,10 @@ export default {
 </script>
 
 <style scoped>
+.a{
+    color: #fff;
+}
+
 nav {
     background-color: #000;
     width: 100%;
@@ -65,20 +70,25 @@ nav {
 }
 
 
-.nav-add {
-    transition: 0.5s;
+.nav-add {    
+    width: 14px;
+    height: 14px;
 }
 
 .modal {
     background-color: #000;
     display: none;
-    transition: 0.5s;
+    transition: 0.5s;    
+    color: #fff;
 }
 
 .hidden:hover .modal {
     margin-left: 10px;
-    display: block;
-    align-items: center;
+    display: block;   
+}
+
+.hidden:hover .nav-add {  
+    display: none;   
 }
 
 .hidden:hover .menu {    

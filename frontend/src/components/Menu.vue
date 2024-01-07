@@ -37,6 +37,7 @@ export default {
         line-height: 18.29px;
         margin-left: 46px;
         margin-top: 63px;
+        cursor: pointer;
     }
 
     .first-menu-button img{
@@ -51,6 +52,7 @@ export default {
         line-height: 18.29px;
         margin-left: 46px;
         margin-top: 45px;
+        cursor: pointer;
     }
 
     .menu-button img{

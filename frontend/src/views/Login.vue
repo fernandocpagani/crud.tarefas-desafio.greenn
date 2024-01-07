@@ -51,38 +51,40 @@
 
 <style scoped>
 #padding-page {
-    padding: 4.6vh 4.758vw 4.6vh 2.35vw;
-    height: 100vh;
-    width: 100vw;
-    justify-items: center;
+    padding: 31px 61px 27px 31px;
+    height: 657px;
+    width: 1280px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #main-container {
-    align-items: center;
-    justify-items: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+
 }
 
 .left-content {
-    width: 47.57vw;
-    height: 90.8vh;
-    margin-right: 3.4vw;
+    width: 609px;
+    height: 599px;
+    margin-right: 44px;
     background-color: #f7f7f7;
     transition: 0.5;
 }
 
 .hand {
-    padding-top: 9.13vh;
-    margin-left: 5.08vw;
+    padding-top: 60px;
+    margin-left: 65px;
     font-size: 48px;
     border: none;
 }
 
 .left-text {
-    padding-top: 23.11vh;
+    padding-top: 152px;
     margin: 0 auto;
-    width: 40vw;
+    width: 513px;
 }
 
 .title-left-content {
@@ -90,22 +92,23 @@
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
-    line-height: 150%;
-    margin-bottom: 2.3vh;
+    line-height: 36px;
+    margin-bottom: 15px;
     transition: 0.5;
+    text-align: left;
 }
 
 p {
     color: #000;
     font-size: 16px;
-    font-style: normal;
     font-weight: 400;
-    line-height: 150%;
+    line-height: 24px;
+    text-align: left;
 }
 
 .images {
-    margin-top: 14vh;
-    margin-left: 3.5vw;
+    margin-top: 93px;
+    margin-left: 45px;
     display: flex;
     flex-direction: row;
 }
@@ -127,7 +130,7 @@ p {
 .right-content {
     display: flex;
     flex-direction: column;
-    width: 41.78vw;
+    width: 535px;
     background-color: #fff;
     justify-content: center;
     box-sizing: border-box;
@@ -139,7 +142,10 @@ p {
     font-style: normal;
     font-weight: 800;
     line-height: 180%;
-    margin-bottom: 3vh;
+    margin-bottom: 10px;
+    line-height: 49px;
+    letter-spacing: 0em;
+    text-align: left;
 }
 
 .form-group {
@@ -152,8 +158,9 @@ label {
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 180%;
-    margin-top: 3vh;
+    margin-top: 20px;
+    line-height: 29px;
+    text-align: left;
 }
 
 input {
@@ -162,7 +169,7 @@ input {
     font-style: normal;
     font-weight: 400;
     line-height: 180%;
-    margin-top: 1.37vh;
+    margin-top: 9px;
     border: 1px solid #e5e5e5;
     padding-left: 20px;
 }
@@ -171,7 +178,7 @@ input {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 5.3vh;
+    margin-top: 35px;
 }
 
 .white-button {
@@ -210,7 +217,7 @@ input {
 }
 
 .left-content:hover .hand {
-    padding-top: 14.3vh;
+    padding-top: 94px;
 }
 
 .left-content:hover .image {
@@ -222,10 +229,6 @@ input {
 }
 
 .left-content:hover .left-text {
-    padding-top: 17.6vh;
-}
-
-.left-content:hover .images {
-    margin-top: 14.33vh;    
+    padding-top: 117px;
 }
 </style>

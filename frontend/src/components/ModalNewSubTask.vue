@@ -5,14 +5,14 @@ const open = ref(false)
 </script>
 
 <template>
-  <button @click="open = true" class="button-add-task"><img class="nav-add" src="../../public/adicionarcinza.svg" alt="adicionar">Criar tarefa</button>
+  <button @click="open = true" class="button-add-task">Criar subtarefa</button>
 
   <div v-if="open" class="modal">
 
     <form id="form">
 
       <div>
-        <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" required>
+        <input type="name" id="task-name" name="task-name" placeholder="Nome da subtarefa" required>
       </div>
 
       <div>
@@ -27,7 +27,7 @@ const open = ref(false)
       <div class="buttons">
         <button @click="open = false" class="white-button">Cancelar</button>
 
-        <button @click="open = false" class="black-button">Criar tarefa</button>
+        <button @click="open = false" class="black-button">Criar subtarefa</button>
       </div>
     </form>
 
@@ -41,13 +41,17 @@ const open = ref(false)
   font-weight: 400;
   color: #81858e;
   font-size: 15px;
-  cursor: pointer;  
+  cursor: pointer;
+  margin-left: 10px
 }
 
-.nav-add{
-  height: 14px;
-  width: 14px; 
-  margin-right: 10px;
+.button-add-task img {
+  color: #81858e;
+}
+
+.button-add-task img {
+  width: 20px;
+  padding-right: 10px;
 }
 
 .modal {

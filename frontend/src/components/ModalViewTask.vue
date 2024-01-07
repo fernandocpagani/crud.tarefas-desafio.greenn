@@ -10,55 +10,96 @@ const open = ref(false)
   <div v-if="open" class="modal">
 
 
-    <main-container id="main-container">
+    <div id="main-container">
 
       <nav>
         <div class="date">
           <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
         </div>
         <div class="buttons-nav-right">
-          <img src="../../public/3pontos.svg" alt="3pontos">
-          <img class="x" src="../../public/x.svg" alt="x">
+          <form>
+
+            <div>
+                    <ul class="main-dropdown">
+                        <li class="dropdown-hover">
+                            <ul class="dropdown-menu">
+                                <li class="black-li"><img src="../../public/copiarlink.svg" alt="copiar link">Copiar link da tarefa</li>
+                                <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa</li>
+                                <li class="black-li"><img src="../../public/imprimir.svg" alt="imprimir">Imprimir tarefa</li>
+                                <li class="red-li"><img src="../../public/lixeiravermelha.svg" alt="excluir">Excluir tarefa</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+
+            <button @click="open = false" class="x"><img src="../../public/3pontos.svg" alt="3pontos"></button>
+
+            <button @click="open = false" class="x"><img src="../../public/x.svg" alt="x"></button>
+          </form>
         </div>
       </nav>
 
+      <div class="sub-container">
 
-      <div class="task">
+        <div class="left-content">
 
-        <div>
-          <input type="checkbox" id="checkbox-task">
+          <div class="task">
+
+            <div>
+              <input type="checkbox" id="checkbox-task">
+            </div>
+
+            <div class="task-field">
+              <label class="title-task">Ir ao mercado</label>
+              <p class="description">Fazer compra semanal</p>
+
+            </div>
+          </div>
+
+          <h3 class="h3-sub-task">Subtarefas</h3>
+
+          <div class="sub-task-content">
+
+            <div class="sub-task">
+
+              <div>
+                <input type="checkbox" id="sub-checkbox-task">
+              </div>
+
+              <div class="sub-task-item">
+                <label class="title-sub-task">Arroz</label>
+                <div class="menu-tasks">
+                  <button><img src="../../public/lapis.svg" alt="editar"></button>
+                  <button><img src="../../public/calendario.svg" alt="calendario"></button>
+                  <button><img src="../../public/lixeiracinza.svg" alt="excluir"></button>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        <div class="task-field">
-          <label class="title-task">Ir ao mercado</label>
-          <p class="description">Fazer compra semanal</p>
+        <div class="right-content">
+
+          <h4 class="title-right">Criado em</h4>
+          <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">30/07/2023 às
+            17:42</h5>
+
+          <h4 class="title-right">Data de vencimento</h4>
+          <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">04/09/2023</h5>
+
+          <h4 class="title-right">Modificado em</h4>
+          <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">30/07/2023 às 17:42</h5>
+
+          <h4 class="title-right">ID da tarefa</h4>
+          <h5 class="info-black">haEJkmbk</h5>
 
         </div>
+
       </div>
 
-      <div class="sub-task-content">
-
-        <div class="sub-task">
-          <div>
-            <input type="checkbox" id="sub-checkbox-task">
-          </div>
-          <div>
-            <label class="title-task">Arroz</label>
-          </div>
-        </div>
-
-        <div class="sub-task">
-          <div>
-            <input type="checkbox" id="sub-checkbox-task">
-          </div>
-          <div>
-            <label class="title-task">Arroz</label>
-          </div>
-        </div>
-
-      </div>
-
-    </main-container>
+    </div>
 
   </div>
 </template>
@@ -99,7 +140,7 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   padding: 20px 30px;
-  border: solid 1px #d9d9d9;
+  border-bottom: solid 1px #d9d9d9;
   align-items: center;
 }
 
@@ -119,74 +160,239 @@ nav {
   align-items: center;
 }
 
+.main-dropdown {  
+  list-style: none;
+}
+
+.dropdown-hover{
+  position: absolute;
+  display: none;
+  margin-top: 25px; 
+}
+.dropdown-menu {   
+  list-style: none;
+  padding: 30px ;
+  width: 246px;
+  height: 232px;
+  position: relative;  
+  background-color: #fff;
+}
+
+form:hover .dropdown-hover{
+  display: block;
+}
+
+.black-li {
+  justify-items: center;
+  text-decoration: none;
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  text-align: left;
+}
+
+.black-li img {
+  margin-right: 20px;
+  width: 17px;
+  height: 17px;
+}
+
+.red-li {
+  text-decoration: none;
+  color: #d31408;
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  text-align: left;
+}
+
+.red-li img {
+  margin-right: 20px;
+  width: 17px;
+  height: 17px;
+}
 .x {
   margin-left: 35px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.sub-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-content {
+  width: 573px;
 }
 
 .task {
-    width: 678px;
-    border: solid 1px #e5e5e5;
-    box-sizing: border-box;
-    padding: 15px 25px;
-    display: flex;
-    flex-direction: row;
-    transition: .5;
+  width: 513px;
+  box-sizing: border-box;
+  padding: 30px 30px 0px 30px;
+  display: flex;
+  flex-direction: row;
+  transition: .5;
 }
 
 input {
-    all: unset;
-    border: 2px solid #e5e5e5;
-    border-radius: 100%;
-    width: 16px;
-    height: 16px;
-    display: inline-block;
+  all: unset;
+  border: 2px solid #e5e5e5;
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
 }
 
 input:checked {
-    background-color: #000;
-    width: 16px;
-    height: 16px;
-    border: 2px solid #000;
-    -webkit-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    transform: rotate(0deg);
+  background-color: #000;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #000;
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 
-.task-field{
-    width: 447px;    
+.task-field {
+  width: 447px;
 }
 
 .title-task {
-    font-size: 18px;
-    font-weight: 400;
-    margin-left: 20px;
-    line-height: normal;
-    color: #000;
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 20px;
+  line-height: normal;
+  color: #000;
+  max-width: 470px;
 }
 
 .description {
-    margin-left: 20px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    color: #81858e;
-    padding-top: 7px;
-    padding-bottom: 10px;
-    width: 200px;
+  margin-left: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color: #81858e;
+  max-width: 470px;
+}
+
+.h3-sub-task {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: 0em;
+  border-bottom: solid 1px #e5e5e5;
+  color: #000;
+  margin-left: 70px;
+  margin-top: 38px;
+  width: 470px;
+  padding-bottom: 15px;
 }
 
 .sub-task-content {
-    box-sizing: border-box;  
-    border-top: none; 
-    padding: 10px 65px;  
+  box-sizing: border-box;
+  border-top: none;
+  margin: 10px 0px;
 }
 
 .sub-task {
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    padding: 10px 0;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 10px 0;
+  margin-left: 70px;
+  width: 470px;
 }
+
+.sub-task-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.title-sub-task {
+  width: 290px;
+  margin-left: 20px;
+}
+
+.menu-tasks {
+  display: flex;
+  align-items: center;
+  display: none;
+}
+
+.menu-tasks button {
+  border: none;
+  padding-left: 30px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.sub-task-item:hover .menu-tasks {
+  display: block;
+}
+
+.right-content {
+  box-sizing: border-box;
+  background-color: #f7f7f7;
+  padding: 30px;
+  width: 246px;
+  height: 543px;
+}
+
+.title-right {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  text-align: left;
+  margin-bottom: 10px;
+  color: #81858e;
+}
+
+.info-black {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: left;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.info-green {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: left;
+  margin-bottom: 40px;
+  color: #009488;
+}
+
+.info-black img,
+.info-green img {
+  margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
