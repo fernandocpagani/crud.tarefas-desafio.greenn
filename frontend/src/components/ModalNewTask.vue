@@ -1,38 +1,106 @@
-<script setup>
+<!-- <script setup>
 import { ref } from 'vue'
 
 const open = ref(false)
-</script>
+</script> -->
 
 <template>
-  <button @click="open = true" class="button-add-task"><img class="nav-add" src="../../public/adicionarcinza.svg" alt="adicionar">Criar tarefa</button>
+  <!-- <button @click="open = true" class="button-add-task"><img class="nav-add" src="../../public/adicionarcinza.svg" alt="adicionar">Criar tarefa</button> -->
+  <!-- 
+  <div v-if="open" class="modal"> -->
 
-  <div v-if="open" class="modal">
+  <div class="modal">
 
     <form id="form">
 
       <div>
-        <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" required>
+        <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
+          v-model="title">
       </div>
 
       <div>
-        <input type="name" id="task-description" name="task-description" placeholder="Descrição" required>
+        <input type="name" id="task-description" name="task-description" maxlength="60" placeholder="Descrição" required
+          v-model="description">
       </div>
 
-      <div>
-        <button class="button-date"><img src="../../public/calendario.svg" alt=""><input placeholder="Data de vencimento"
-            class="date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date"></button>
+      <div class="button-date">
+        <img src="../../public/calendario.svg" alt="">
+        <input placeholder="Data de vencimento" class="date" type="text" onfocus="(this.type='date')"
+          onblur="(this.type='text')" id="date" v-model="fishdate">
       </div>
+      <!-- 
+      <button class="button-date"><img src="../../public/calendario.svg" alt=""></button> -->
+
 
       <div class="buttons">
-        <button @click="open = false" class="white-button">Cancelar</button>
-
-        <button @click="open = false" class="black-button">Criar tarefa</button>
+        <router-link to="/dashboard">
+          <button class="white-button">Cancelar</button>
+        </router-link>
+        <div class="button" @click="createTask()">
+          <input type="button" class="black-button" value="Adicionar post">
+        </div>
       </div>
+
     </form>
 
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: "ModalNewTask",
+
+  data() {
+    return {
+      title: null,
+      description: null,
+      finishdate: null,
+      users_id: null,
+    }
+  },
+
+  computed: {
+    isLogged() {
+      if (localStorage.getItem("user-info")) {
+        return true
+      } else {
+        return this.$router.push({ name: "login" })
+      }
+    }
+  },
+
+  methods: {
+
+    async createTask() {
+
+      const user = JSON.parse(localStorage.getItem("user-info"))
+
+      const data = {
+        title: this.title,
+        description: this.description,
+        finishdate: this.finishdate,
+        users_id: user.user.id,
+      }
+
+      axios.post('http://localhost:8000/api/task/register', data)
+        .then(function (response) {
+          console.log(response);
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+          console.error(error);
+        });
+      console.log(data);
+
+      // setTimeout(() =>this.$router.push({ name: "dashboard" }), 1000);
+    }
+  }
+}
+
+</script> 
 
 <style scoped>
 .button-add-task {
@@ -41,12 +109,12 @@ const open = ref(false)
   font-weight: 400;
   color: #81858e;
   font-size: 15px;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
-.nav-add{
+.nav-add {
   height: 14px;
-  width: 14px; 
+  width: 14px;
   margin-right: 10px;
 }
 
@@ -106,6 +174,14 @@ const open = ref(false)
 .date {
   margin-left: 10px;
   border: none;
+}
+
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 35px;
 }
 
 .white-button {

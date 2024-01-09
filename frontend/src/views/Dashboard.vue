@@ -15,7 +15,16 @@ export default {
     Navbar,
     Menu,
     Entrance,
-  }
+  },
+
+  methods:{
+    async reloadPage(){
+      if(!window.location.hash) {
+       window.location = window.location + '#loaded';
+       window.location.reload();
+     }
+    }
+  },
 }
 </script>
 

@@ -27,19 +27,23 @@
 
                     <div class="form-group">
                         <label for="email">Endereço de e-mail:</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="email@email.com.br">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="email@email.com.br"
+                            v-model="email">
                     </div>
 
                     <div class="form-group">
                         <label for="password">Senha de acesso:</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="********">
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Min. 6 caracteres" v-model="password" minlength="6">
                     </div>
 
                     <div class="buttons">
                         <router-link to="/createuser">
                             <button class="white-button">Não tenho conta</button>
                         </router-link>
-                        <button class="black-button">Acessar</button>
+                        <div>
+                            <input class="black-button" value="Acessar" v-on:click="login">
+                        </div>
                     </div>
 
                 </form>
@@ -48,6 +52,46 @@
         </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios'
+import Message from '../components/Message.vue'
+export default {
+    name: "Login",
+    components: {
+        Message
+    },
+    data() {
+        return {
+            email: '',
+            password: '',
+            msg: null,
+        }
+    },
+    methods: {
+        async login() {
+            axios.post(`http://127.0.0.1:8000/api/auth/login`, { email: this.email, password: this.password })
+                .then((result) => {
+                    localStorage.setItem("user-info", JSON.stringify(result.data))
+                    this.$router.push({ name: 'dashboard' })
+                })
+
+                .catch(error => {
+                    this.msg = "Usuario e/ou senha incorreto(s)"
+                    setTimeout(() => this.msg = "", 3000);
+                })
+        },
+
+        mounted() {
+            let user = localStorage.getItem('user-info');
+            if (user) {
+                this.$router.push({ name: "dashboard" })
+            }
+        }
+    }
+}
+
+</script>
 
 <style scoped>
 #padding-page {
@@ -205,6 +249,7 @@ input {
     font-weight: 600;
     line-height: 180%;
     cursor: pointer;
+    text-align: center;
 }
 
 .left-content:hover {

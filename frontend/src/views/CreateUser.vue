@@ -1,5 +1,8 @@
 <template>
     <div id=padding-page>
+
+        <Message :msg="msg" v-show="msg" />
+
         <div id="main-container">
 
             <div class="left-content">
@@ -12,24 +15,28 @@
 
                     <div class="form-group">
                         <label for="name">Nome completo:</label>
-                        <input type="name" class="form-control" id="name" name="name" placeholder="Nome completo">
+                        <input type="name" class="form-control" id="name" name="name" placeholder="Nome completo" v-model="name">
                     </div>
 
                     <div class="form-group">
                         <label for="email">Endereço de e-mail:</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="email@email.com.br">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="email@email.com.br" v-model="email">
                     </div>
 
                     <div class="form-group">
                         <label for="password">Senha de acesso:</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="********">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Min. 6 caracteres" v-model="password" minlength="6">
                     </div>
 
                     <div class="buttons">
                         <router-link to="/">
                             <button class="white-button">Já tenho conta</button>
                         </router-link>
-                        <button class="black-button">Cadastrar</button>
+
+                        <div  @click="createUser()">                            
+                            <button class="black-button">Cadastrar</button>
+                        </div>
+
                     </div>
 
                 </form>
@@ -56,20 +63,74 @@
     </div>
 </template>
 
+<script>
+import axios from 'axios'
+import Message from '../components/Message.vue'
+
+export default {
+    name: "CreateUser",
+    components: {
+        Message
+    },
+
+    data() {
+        return {
+            email: null,
+            name: null,
+            password: null,
+            msg: null,
+        }
+    },
+
+    methods: {
+
+        async createUser() {
+
+            const data = {
+                email: this.email,
+                name: this.name,
+                password: this.password,
+            }
+
+            // if (email.value !== password_confirmation.value) {
+
+            //     this.msg = `Email já cadastrado`
+            //     setTimeout(() => this.msg = "", 3000);
+
+            // } else {
+
+                axios.post('http://127.0.0.1:8000/api/auth/register', data)
+                    .then(function (response) {
+                        console.log(response);
+
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                        this.msg = `Não foi possível cadastrar`
+                        setTimeout(() => this.msg = "", 3000);
+                    });
+
+                    setTimeout(() =>this.msg = "Usuário cadastrado com sucesso!", this.$router.push({ name: "login" }), 3000);
+            }
+        }
+    }
+// }
+</script>
+
 <style scoped>
 #padding-page {
     padding: 31px 61px 27px 31px;
     height: 657px;
-    width: 1280px;   
+    width: 1280px;
     position: absolute;
     top: 50%;
-    left: 50%; 
-    transform: translate(-50%, -50%); 
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-#main-container {   
+#main-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);   
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .left-content {
@@ -212,5 +273,4 @@ p {
     width: 235px;
     background: linear-gradient(270deg, #000 30%, #fff);
 }
-
 </style>

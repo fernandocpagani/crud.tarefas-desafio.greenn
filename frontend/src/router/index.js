@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import Login from '../views/Login.vue'
 import CreateUser from '../views/CreateUser.vue'
 import Dashboard from '../views/Dashboard.vue'
+import ModalViewTask from '../components/ModalViewTask'
+import ModalNewTask from '../components/ModalNewTask'
 
 const routes = [
   {
@@ -32,6 +34,16 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard
+  },
+  {
+    path: '/modalviewtask/:id',
+    name: 'modalviewtask',
+    component: ModalViewTask
+  },
+  {
+    path: '/modalnewtask',
+    name: 'modalnewtask',
+    component: ModalNewTask
   },
 ]
 

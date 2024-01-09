@@ -8,7 +8,7 @@
                 <div class="hidden">
                     <img class="nav-add" src="../../public/Vector.svg" alt="adicionar">
                     <div class="modal">
-                        <ModalNewTask class="a"/>
+                        <ModalNewTask/>
                     </div>
                 </div>
                 <img class="second-nav-button" src="../../public/interrogacao.svg" alt="interrogacao">
@@ -35,9 +35,6 @@ export default {
 </script>
 
 <style scoped>
-.a{
-    color: #fff;
-}
 
 nav {
     background-color: #000;
