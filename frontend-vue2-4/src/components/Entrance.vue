@@ -17,8 +17,8 @@
                         <div class="task-field">
 
                             <label class="title-task">
-                                <!-- <ModalViewTask /> -->
-                                <Modal />
+                                <ModalViewTask />
+                                <!-- <Modal /> -->
                             </label>
                             <p class="description">{{ task.description }}</p>
                             <div class="date-counter">
@@ -75,7 +75,7 @@
 
 <script>
 // import ModalNewTask from './../components/ModalNewTask.vue'
-// import ModalViewTask from './../components/ModalViewTask.vue'
+import ModalViewTask from './../components/ModalViewTask.vue'
  import Modal from './../components/Modal.vue'
 import axios from 'axios'
 
@@ -83,7 +83,7 @@ export default {
     name: "Entrance",
     components: {
         // ModalNewTask,
-        // ModalViewTask,
+        ModalViewTask,
         Modal,
 
     },

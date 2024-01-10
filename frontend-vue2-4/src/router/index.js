@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import CreateUser from '../views/CreateUser.vue'
 import Dashboard from '../views/Dashboard.vue'
 import ModalNewTask from '../components/ModalNewTask'
+import ModalViewTask from '../components/ModalViewTask'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,11 @@ const routes = [
     path: '/modalnewtask',
     name: 'modalnewtask',
     component: ModalNewTask
+  },
+  {
+    path: '/modalviewtask/:id',
+    name: 'modalviewtask',
+    component: ModalViewTask
   },
 ]
 
