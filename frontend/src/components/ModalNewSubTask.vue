@@ -24,6 +24,8 @@ const open = ref(false)
             class="date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date"></button>
       </div>
 
+      
+
       <div class="buttons">
         <button @click="open = false" class="white-button">Cancelar</button>
 

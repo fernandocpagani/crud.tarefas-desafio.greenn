@@ -1,13 +1,6 @@
-<!-- <script setup>
-import { ref } from 'vue'
 
-const open = ref(false)
-</script> -->
 
-<template>
-  <!-- <button @click="open = true" class="button-add-task"><img class="nav-add" src="../../public/adicionarcinza.svg" alt="adicionar">Criar tarefa</button> -->
-  <!-- 
-  <div v-if="open" class="modal"> -->
+<template>  
 
   <div class="modal">
 
@@ -23,30 +16,11 @@ const open = ref(false)
           v-model="description">
       </div>
      
-
-      <div>
-  <div>
-    <b-button-group>
-      <b-button>Button 1</b-button>
-      <b-button>Button 2</b-button>
-      <b-button>Button 3</b-button>
-    </b-button-group>
-  </div>
-  <div class="mt-3">
-    <b-button-group>
-      <b-button variant="success">Success</b-button>
-      <b-button variant="info">Info</b-button>
-      <b-button variant="warning">Warning</b-button>
-    </b-button-group>
-  </div>
-</div>
-
-      
-      <div>
-    <label for="example-datepicker">Choose a date</label>
-    <b-form-datepicker id="example-datepicker" v-model="value" class="mb-2"></b-form-datepicker>
-    <p>Value: '{{ value }}'</p>
-  </div>
+      <div class="button-date">
+        <img src="../../public/calendario.svg" alt="">
+        <input placeholder="Data de vencimento" class="date" type="text" onfocus="(this.type='date')"
+          onblur="(this.type='text')" id="date" v-model="date">
+      </div>
 
       <div class="buttons">
         <router-link to="/dashboard">
@@ -57,8 +31,6 @@ const open = ref(false)
         </div>
       </div>
 
-      
-
     </form>
 
   </div>
@@ -66,20 +38,18 @@ const open = ref(false)
 
 <script>
 import axios from 'axios'
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+
 
 export default {
   name: "ModalNewTask",
-  components: { VueDatePicker },
+
 
   data() {
     return {
       title: null,
       description: null,
       date: null,
-      users_id: null,
-      date: null,
+      users_id: null,    
     }
   },
 
@@ -117,8 +87,9 @@ export default {
         });
       console.log(data);
 
-      // setTimeout(() =>this.$router.push({ name: "dashboard" }), 1000);
-    }
+      setTimeout(() =>this.$router.push({ name: "dashboard" }), 1000);
+    },
+   
   }
 }
 
@@ -160,8 +131,7 @@ export default {
   background-color: #fff;
 }
 
-#task-name {
-  font-family: Montserrat;
+#task-name {  
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
@@ -172,7 +142,6 @@ export default {
 }
 
 #task-description {
-  font-family: Montserrat;
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
@@ -191,11 +160,19 @@ export default {
   border: solid 1px #e5e5e5;
   background-color: #fff;
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;  
 }
 
-.date {
-  margin-left: 10px;
+.button-date img{
+  height: 14px;
+  width: 14px;
+  margin: 13px 14px 10px 13px;
+}
+
+.date {  
   border: none;
+  font-size: 14px;
 }
 
 
@@ -203,7 +180,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 35px;
+  margin-top: 15px;
 }
 
 .white-button {

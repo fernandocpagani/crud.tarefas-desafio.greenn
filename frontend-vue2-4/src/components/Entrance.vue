@@ -18,6 +18,7 @@
 
                             <label class="title-task">
                                 <!-- <ModalViewTask /> -->
+                                <Modal />
                             </label>
                             <p class="description">{{ task.description }}</p>
                             <div class="date-counter">
@@ -57,41 +58,42 @@
                     </div>
 
                     <div class="add-task">
-                        <teste />
+
                     </div>
 
                     <div>
-      <b-button @click="modalShow = !modalShow">Open Modal</b-button>
-  
-      <b-modal v-model="modalShow">Hello From Modal!</b-modal>
-    </div>
+
+                    </div>
 
                 </div>
 
             </div>
-
         </div>
 
     </div>
 </template>
 
 <script>
-import ModalNewTask from './../components/ModalNewTask.vue'
-import ModalViewTask from './../components/ModalViewTask.vue'
-import teste from './../components/teste.vue'
+// import ModalNewTask from './../components/ModalNewTask.vue'
+// import ModalViewTask from './../components/ModalViewTask.vue'
+ import Modal from './../components/Modal.vue'
 import axios from 'axios'
 
 export default {
     name: "Entrance",
     components: {
-        ModalNewTask,
-        ModalViewTask,
-        teste
+        // ModalNewTask,
+        // ModalViewTask,
+        Modal,
+
     },
 
-
+    data: () => ({
+      dialog: false,
+    }),
 
     data() {
+        
         return {
             tasks: [],
             subtask: null,
@@ -128,20 +130,8 @@ export default {
                     this.lista()
                     setTimeout(() => this.msg = "", 3000);
                 })
-        },
-
-        lista() {
-            axios
-                .get('http://localhost:8000/api/task')
-                .then((response) => {
-                    this.posts = response.data
-                })
-        }
-    },
-
-    // mounted() {
-    //     this.lista()
-    //   }
+        },     
+    },  
 }
 
 </script>
