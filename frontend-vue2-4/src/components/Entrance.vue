@@ -14,6 +14,8 @@
 
                         <div>
                             <input type="checkbox" id="checkbox-task" class="checkbox-input">
+                            {{ task.status && task.status.pending ? checked : unchecked }}
+                            {{ task.status }}
                         </div>
 
                         <div class="task-field">
@@ -50,11 +52,12 @@
 
                     <div v-for="subtask in subtasks" :key="subtask.id">
                         <div v-if="subtask.task_id == task.id">
+                            
                             <div class="sub-task-content">
 
                                 <div class="sub-task">
                                     <div>
-                                        <input type="checkbox" class="sub-checkbox-task">
+                                        <input type="checkbox" class="sub-checkbox-task"> {{ subtask.sstatus }}
                                     </div>
                                     <div class="subtask-text">
                                         <label class="title-task">{{ subtask.stitle }}</label>
@@ -88,7 +91,7 @@
         </div>
 
     </div>
-</div></template>
+</template>
 
 <script>
 import UpdateTask from './../components/UpdateTask.vue'
@@ -117,14 +120,14 @@ export default {
             description: null,
             date: null,
         }
-    },
+    }, 
 
     async mounted() {
         {
             axios
                 .get('http://127.0.0.1:8000/api/task')
                 .then((response) => {
-                    this.tasks = response.data                    
+                    this.tasks = response.data
                 })
         }
         {
@@ -137,7 +140,7 @@ export default {
         }
         {
 
-            const result = await axios.get(`http://localhost:8000/api/task/` + this.$route.params.id)          
+            const result = await axios.get(`http://localhost:8000/api/task/` + this.$route.params.id)
 
             this.title = result.data.title
             this.description = result.data.description
@@ -145,6 +148,15 @@ export default {
     },
 
     methods: {
+
+        sumSubTask() {
+            const resulttask = axios.get(`http://localhost:8000/api/task`)
+
+
+            console.log(resulttask)
+
+        },
+
         async deleteTask(id) {
             axios.delete(`http://localhost:8000/api/task/${id}/delete`)
                 .then(() => {
@@ -173,7 +185,7 @@ export default {
             }
         },
 
-        
+
     },
 }
 
@@ -185,7 +197,7 @@ export default {
     padding: 50px 144px 50px 165px;
     background-color: #ffffff;
     margin-top: 70px;
-    margin-left:293px;
+    margin-left: 293px;
 }
 
 .title {
@@ -240,7 +252,7 @@ export default {
 }
 
 .description-subtask {
-   
+
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -249,18 +261,18 @@ export default {
     padding-bottom: 0px;
     width: 200px;
     margin-bottom: 0px;
-    
+
 }
 
-.menu-subtasks button {    
+.menu-subtasks button {
     padding: 20px 0px 20px 30px;
     border: none;
     background-color: transparent;
     display: none;
 }
 
-.sub-task-content:hover{
-background-color: #fafafa;
+.sub-task-content:hover {
+    background-color: #fafafa;
 }
 
 .sub-task-content:hover .menu-subtasks button {
@@ -268,16 +280,16 @@ background-color: #fafafa;
 }
 
 .menu-subtasks {
-    display: flex;    
+    display: flex;
     align-items: center;
 }
 
-.description {  
+.description {
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
     color: #81858e;
-    padding-top: 7px;  
+    padding-top: 7px;
     width: 200px;
 }
 
@@ -299,7 +311,7 @@ background-color: #fafafa;
 
 .date-counter {
     display: flex;
-    flex-direction: row;    
+    flex-direction: row;
 }
 
 .date img {
@@ -344,7 +356,7 @@ background-color: #fafafa;
     flex-direction: row;
     box-sizing: border-box;
     padding: 10px 0;
-    
+
 }
 
 .add-task {
@@ -378,8 +390,8 @@ background-color: #fafafa;
     text-align: left;
     text-decoration: none;
     color: #81858E;
-    width: 450px;  
-    margin-left:20px
+    width: 450px;
+    margin-left: 20px
 }
 
 .subtask-text img {

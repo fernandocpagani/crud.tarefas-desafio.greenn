@@ -79,7 +79,7 @@
             <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ created_at }}</h5>
 
             <h4 class="title-right">Data de vencimento</h4>
-            <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{ finishdate }}</h5>
+            <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{ finishdate }} </h5>
 
             <h4 class="title-right">Modificado em</h4>
             <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ updated_at }}</h5>

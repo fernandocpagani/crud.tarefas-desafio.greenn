@@ -56,7 +56,7 @@ export default {
     async mounted() {
 
         const result = await axios.get(`http://localhost:8000/api/subtask/` + this.$route.params.id)
-        console.log(result.data)
+        console.log(result.data.task_id)
 
         this.stitle = result.data.stitle
         this.sdescription = result.data.sdescription
