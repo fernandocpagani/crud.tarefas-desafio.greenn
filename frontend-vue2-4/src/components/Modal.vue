@@ -1,118 +1,119 @@
 <template>
-  <div>
-    <b-button id="show-btn" @click="$bvModal.show('bv-modal-example')">{{ title }}</b-button>
+ <div>
+  <a href="#modal_1" class="btn">Abrir modal</a>
+    <div id="modal_1" class="modal">
+        <div class="modal__content">
+            <h2 class="modal__title">Meu primeiro modal</h2>         
 
-    <b-modal id="bv-modal-example" >
-     
+            <div id="main-container">
 
+<nav>
+  <div class="date">
+    <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
+  </div>
+  <div class="buttons-nav-right">
+    <form>
 
-
-        <div id="main-container">
-
-          <nav>
-            <div class="date">
-              <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
-            </div>
-            <div class="buttons-nav-right">
-              <form>
-
-                <div>
-                  <ul class="main-dropdown">
-                    <li class="dropdown-hover">
-                      <ul class="dropdown-menu">
-                        <li class="black-li"><img src="../../public/copiarlink.svg" alt="copiar link">Copiar link da
-                          tarefa
-                        </li>
-                        <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa
-                        </li>
-                        <li class="black-li"><img src="../../public/imprimir.svg" alt="imprimir">Imprimir tarefa</li>
-                        <li class="red-li"><img src="../../public/lixeiravermelha.svg" alt="excluir">Excluir tarefa</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
+      <div>
+        <ul class="main-dropdown">
+          <li class="dropdown-hover">
+            <ul class="dropdown-menu">
+              <li class="black-li"><img src="../../public/copiarlink.svg" alt="copiar link">Copiar link da tarefa
+              </li>
+              <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa</li>
+              <li class="black-li"><img src="../../public/imprimir.svg" alt="imprimir">Imprimir tarefa</li>
+              <li class="red-li"><img src="../../public/lixeiravermelha.svg" alt="excluir">Excluir tarefa</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
 
 
-                <button @click="open = false" class="x"><img src="../../public/3pontos.svg" alt="3pontos"></button>
+      <button @click="open = false" class="x"><img src="../../public/3pontos.svg" alt="3pontos"></button>
 
-                <button @click="open = false" class="x"><img src="../../public/x.svg" alt="x"></button>
-              </form>
-            </div>
-          </nav>
+      <button @click="open = false" class="x"><img src="../../public/x.svg" alt="x"></button>
+    </form>
+  </div>
+</nav>
 
-          <div class="sub-container">
+<div class="sub-container">
 
-            <div class="left-content">
+  <div class="left-content">
 
-              <div class="task">
+    <div class="task">
 
-                <div>
-                  <input type="checkbox" id="checkbox-task">
-                </div>
+      <div>
+        <input type="checkbox" id="checkbox-task">
+      </div>
 
-                <div class="task-field">
-                  <label class="title-task">{{ title }}</label>
-                  <p class="description">{{ description }}</p>
+      <div class="task-field">
+        <h2 class="modal__title">{{ title }}</h2>
+        <p class="description">{{ description }}</p>
 
-                </div>
-              </div>
+      </div>
+    </div>
 
-              <h3 class="h3-sub-task">Subtarefas</h3>
+    <h3 class="h3-sub-task">Subtarefas</h3>
 
-              <div class="sub-task-content" v-for="subtask in subtasks " :key="subtask.id">
+    <div class="sub-task-content" v-for="subtask in subtasks " :key="subtask.id">
 
-                <div class="sub-task" v-if="subtask.task_id == id">
+      <div class="sub-task" v-if="subtask.task_id == id">
 
-                  <div>
-                    <input type="checkbox" id="sub-checkbox-task">
-                  </div>
-
-                  <div class="sub-task-item">
-                    <label class="title-sub-task">{{ subtask.stitle }} </label>
-                    <div class="menu-tasks">
-                      <button><img src="../../public/lapis.svg" alt="editar"></button>
-                      <button><img src="../../public/calendario.svg" alt="calendario"></button>
-                      <button><img src="../../public/lixeiracinza.svg" alt="excluir"></button>
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-
-            <div class="right-content">
-
-              <h4 class="title-right">Criado em</h4>
-              <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ created_at }}</h5>
-
-              <h4 class="title-right">Data de vencimento</h4>
-              <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{ finishdate }}</h5>
-
-              <h4 class="title-right">Modificado em</h4>
-              <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ updated_at }}</h5>
-
-              <h4 class="title-right">ID da tarefa</h4>
-              <h5 class="info-black">{{ id }}</h5>
-
-            </div>
-
-          </div>
-
+        <div>
+          <input type="checkbox" id="sub-checkbox-task">
         </div>
 
+        <div class="sub-task-item">
+          <label class="title-sub-task">{{ subtask.stitle }} </label>
+          <p class="description">{{ subtask.sdescription }}</p>
+          <div class="menu-tasks">
+            <button><img src="../../public/lapis.svg" alt="editar"></button>
+            <button><img src="../../public/calendario.svg" alt="calendario"></button>
+            <button><img src="../../public/lixeiracinza.svg" alt="excluir"></button>
+          </div>
+        </div>
 
-    </b-modal>
+      </div>
+
+    </div>
   </div>
+
+  <div class="right-content">
+
+    <h4 class="title-right">Criado em</h4>
+    <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ created_at }}</h5>
+
+    <h4 class="title-right">Data de vencimento</h4>
+    <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{ finishdate }}</h5>
+
+    <h4 class="title-right">Modificado em</h4>
+    <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ updated_at }}</h5>
+
+    <h4 class="title-right">ID da tarefa</h4>
+    <h5 class="info-black">{{ id }}</h5>
+
+  </div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+            <a href="#" class="modal__link">OK</a>
+        </div>
+    </div>
+ </div>
 </template>
-
-
 
 <script>
 import axios from 'axios'
 
 export default {
-  name: "ModalViewTask",
+  name: "Entrance",
 
 
   data() {
@@ -153,10 +154,105 @@ export default {
     }
   }
 }
-</script>    
-
+</script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;600&display=swap');
+:root {
+    --clr-pink: #EF476F;
+    --clr-green: #06D6A0;
+    --clr-green_hover: #0cc493;
+    --clr-green_active: #0daf84;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    font-family: 'Nunito', sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+.btn{
+    display: inline-flex;
+    padding: 1rem;
+    background-color: var(--clr-pink);
+    color: #ffffff;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.modal{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000ab;
+    display: grid;
+    place-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: .3s;
+}
+
+.modal--2{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--clr-pink);
+    display: grid;
+    place-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: .3s;
+}
+
+
+.modal:target{
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal__content{
+  width: 819px;
+  height: 613px;
+  background-color: #fff;
+}
+
+.modal__title{
+    margin-bottom: 1rem;
+}
+
+.modal__link{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--clr-green);
+    color: black;
+    padding: 0.7rem 3rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+}
+
+.modal__link:hover{
+    background-color: var(--clr-green_hover);
+}
+
+.modal__link:active{
+    background-color: var(--clr-green_active);
+}
+
+
+
+
 .button-add-task {
   background-color: transparent;
   border: none;
@@ -181,11 +277,11 @@ export default {
   align-items: center;
 }
 
-#main-container {
+/* #main-container {
   width: 819px;
   height: 613px;
   background-color: #fff;
-}
+} */
 
 nav {
   display: flex;
@@ -315,7 +411,7 @@ input:checked {
   width: 447px;
 }
 
-.title-task {
+.modal__title {
   font-size: 18px;
   font-weight: 400;
   margin-left: 20px;
@@ -427,11 +523,6 @@ input:checked {
 .info-green img {
   margin-right: 10px;
 }
-
-
-
-
-
 
 .form-group input,
 .form-group textarea {

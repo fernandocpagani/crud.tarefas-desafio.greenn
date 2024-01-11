@@ -4,17 +4,13 @@
             <div class="hand">🤘</div>
 
             <div class="menu">
-
-                <div class="hidden">
-                    <img class="nav-add" src="../../public/Vector.svg" alt="adicionar">
-                    <div class="modal">
-                        <ModalNewTask/>
-                    </div>
-                </div>
-                <img class="second-nav-button" src="../../public/interrogacao.svg" alt="interrogacao">
+                <img class="nav-add" src="../../public/adicionar.svg" alt="adicionar">
+                <button class="hidden">
+                    <ModalNewTask />
+                </button>
+                <img class="nav-button2" src="../../public/interrogacao.svg" alt="interrogacao">
                 <img class="nav-button" src="../../public/sino.svg" alt="sino">
                 <img class="nav-button" src="../../public/circulo.svg" alt="letra nome">
-                
             </div>
 
         </div>
@@ -35,10 +31,10 @@ export default {
 </script>
 
 <style scoped>
-
 nav {
     background-color: #000;
     width: 100%;
+    position: fixed;
 }
 
 .nav-content {
@@ -62,41 +58,29 @@ nav {
     align-items: center;
 }
 
-.hidden{
+.menu:hover .hidden {
+    display: block;
+    padding: 0;
+}
+
+.hidden {
     align-items: center;
-}
-
-
-.nav-add {    
-    width: 14px;
-    height: 14px;
-}
-
-.modal {
-    background-color: #000;
+    background-color: transparent;
+    border: none;
     display: none;
-    transition: 0.5s;    
-    color: #fff;
+    cursor: pointer;
 }
 
-.hidden:hover .modal {
-    margin-left: 10px;
-    display: block;   
-}
-
-.hidden:hover .nav-add {  
-    display: none;   
-}
-
-.hidden:hover .menu {    
-    align-items: center;
-}
-
-.second-nav-button {
-    padding: 0 22.5px 0 45px;
+.nav-add {
+    font-size: 14px;
+    padding: 0;
 }
 
 .nav-button {
     padding: 0 22.5px;
+}
+
+.nav-button2 {
+    padding: 0 22.5px 0 35px;
 }
 </style>

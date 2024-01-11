@@ -43,6 +43,8 @@ Route::get('/task/{id}', [TaskController::class, 'showTask']);
 
 Route::put('/task/{id}/update', [TaskController::class, 'updateTask']);
 
+Route::put('/task/{id}/updatedate', [TaskController::class, 'updateDate']);
+
 Route::delete('/task/{id}/delete', [TaskController::class, 'deleteTask']);
 
 

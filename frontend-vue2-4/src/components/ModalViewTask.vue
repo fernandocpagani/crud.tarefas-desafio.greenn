@@ -2,95 +2,96 @@
 
   <div id="main-container">
 
-    <nav>
-      <div class="date">
-        <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
-      </div>
-      <div class="buttons-nav-right">
-        <form>
+        <nav>
+          <div class="date">
+            <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
+          </div>
+          <div class="buttons-nav-right">
+            <form>
 
-          <div>
-            <ul class="main-dropdown">
-              <li class="dropdown-hover">
-                <ul class="dropdown-menu">
-                  <li class="black-li"><img src="../../public/copiarlink.svg" alt="copiar link">Copiar link da tarefa</li>
-                  <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa</li>
-                  <li class="black-li"><img src="../../public/imprimir.svg" alt="imprimir">Imprimir tarefa</li>
-                  <li class="red-li"><img src="../../public/lixeiravermelha.svg" alt="excluir">Excluir tarefa</li>
+              <div>
+                <ul class="main-dropdown">
+                  <li class="dropdown-hover">
+                    <ul class="dropdown">
+                      <li class="black-li"><img src="../../public/copiarlink.svg" alt="copiar link">Copiar link da tarefa
+                      </li>
+                      <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa</li>
+                      <li class="black-li" @click="window.print()"><img src="../../public/imprimir.svg" alt="imprimir">Imprimir tarefa</li>
+                      <li class="red-li" @click="deleteTask(id)"><img src="../../public/lixeiravermelha.svg" alt="excluir">Excluir tarefa</li>
+                    </ul>
+                  </li>
                 </ul>
-              </li>
-            </ul>
+              </div>
+
+
+              <button class="x"> <img src="../../public/3pontos.svg" alt="3pontos"></button>
+
+              <button class="x"><img src="../../public/x.svg" alt="x"></button>
+            </form>
           </div>
+        </nav>
 
+        <div class="sub-container">
 
-          <button @click="open = false" class="x"><img src="../../public/3pontos.svg" alt="3pontos"></button>
+          <div class="left-content">
 
-          <button @click="open = false" class="x"><img src="../../public/x.svg" alt="x"></button>
-        </form>
-      </div>
-    </nav>
+            <div class="task">
 
-    <div class="sub-container">
+              <div>
+                <input type="checkbox" id="checkbox-task">
+              </div>
 
-      <div class="left-content">
+              <div class="task-field">
+                <h2 class="modal__title">{{ title }}</h2>
+                <p class="description">{{ description }}</p>
 
-        <div class="task">
-
-          <div>
-            <input type="checkbox" id="checkbox-task">
-          </div>
-
-          <div class="task-field">
-            <label class="title-task">{{ title }}</label>
-            <p class="description">{{ description }}</p>
-
-          </div>
-        </div>
-
-        <h3 class="h3-sub-task">Subtarefas</h3>
-
-        <div class="sub-task-content" v-for="subtask in subtasks " :key="subtask.id">
-
-          <div class="sub-task" v-if="subtask.task_id == id">
-
-            <div>
-              <input type="checkbox" id="sub-checkbox-task">
-            </div>
-
-            <div class="sub-task-item">
-              <label class="title-sub-task">{{ subtask.stitle }} </label>
-              <div class="menu-tasks">
-                <button><img src="../../public/lapis.svg" alt="editar"></button>
-                <button><img src="../../public/calendario.svg" alt="calendario"></button>
-                <button><img src="../../public/lixeiracinza.svg" alt="excluir"></button>
               </div>
             </div>
 
+            <h3 class="h3-sub-task">Subtarefas</h3>
+
+            <div class="sub-task-content" v-for="subtask in subtasks " :key="subtask.id">
+
+              <div class="sub-task" v-if="subtask.task_id == id">
+
+                <div>
+                  <input type="checkbox" id="sub-checkbox-task">
+                </div>
+
+                <div class="sub-task-item">
+                  <label class="title-sub-task">{{ subtask.stitle }} </label>
+                  <p class="description">{{ subtask.sdescription }}</p>
+                  <div class="menu-tasks">
+                    <button><img src="../../public/lapis.svg" alt="editar"></button>
+                    <button><img src="../../public/calendario.svg" alt="calendario"></button>
+                    <button><img src="../../public/lixeiracinza.svg" alt="excluir"></button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="right-content">
+
+            <h4 class="title-right">Criado em</h4>
+            <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ created_at }}</h5>
+
+            <h4 class="title-right">Data de vencimento</h4>
+            <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{ finishdate }}</h5>
+
+            <h4 class="title-right">Modificado em</h4>
+            <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ updated_at }}</h5>
+
+            <h4 class="title-right">ID da tarefa</h4>
+            <h5 class="info-black">{{ id }}</h5>
+
           </div>
 
         </div>
+     
       </div>
-
-      <div class="right-content">
-
-        <h4 class="title-right">Criado em</h4>
-        <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ created_at }}</h5>
-
-        <h4 class="title-right">Data de vencimento</h4>
-        <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{ finishdate }}</h5>
-
-        <h4 class="title-right">Modificado em</h4>
-        <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ updated_at }}</h5>
-
-        <h4 class="title-right">ID da tarefa</h4>
-        <h5 class="info-black">{{ id }}</h5>
-
-      </div>
-
-    </div>
-
-  </div>
-
 
 </template>
 
@@ -137,22 +138,22 @@ export default {
 
         })
     }
-  }
+  },
+  methods: {
+        async deleteTask(id) {
+            axios.delete(`http://localhost:8000/api/task/${id}/delete`)
+                .then(() => {
+                  
+        this.$router.push({ name: 'dashboard' });
+      
+                })
+        },
+      }
 }
 </script>    
 
 
 <style scoped>
-.button-add-task {
-  background-color: transparent;
-  border: none;
-  font-weight: 400;
-  color: #000;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: normal;
-}
 
 .modal {
   position: fixed;
@@ -167,11 +168,11 @@ export default {
   align-items: center;
 }
 
-#main-container {
+ #main-container {
   width: 819px;
   height: 613px;
   background-color: #fff;
-}
+} 
 
 nav {
   display: flex;
@@ -203,12 +204,12 @@ nav {
 }
 
 .dropdown-hover {
-  position: absolute;
-  display: none;
+  position: absolute; 
+   display: none; 
   margin-top: 25px;
 }
 
-.dropdown-menu {
+.dropdown{
   list-style: none;
   padding: 30px;
   width: 246px;
@@ -229,6 +230,7 @@ form:hover .dropdown-hover {
   font-weight: 400;
   line-height: 17px;
   text-align: left;
+  cursor: pointer;
 }
 
 .black-li img {
@@ -245,6 +247,7 @@ form:hover .dropdown-hover {
   font-weight: 400;
   line-height: 17px;
   text-align: left;
+  cursor: pointer;
 }
 
 .red-li img {
@@ -301,7 +304,7 @@ input:checked {
   width: 447px;
 }
 
-.title-task {
+.modal__title {
   font-size: 18px;
   font-weight: 400;
   margin-left: 20px;
@@ -413,11 +416,6 @@ input:checked {
 .info-green img {
   margin-right: 10px;
 }
-
-
-
-
-
 
 .form-group input,
 .form-group textarea {

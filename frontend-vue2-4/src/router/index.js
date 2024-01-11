@@ -6,6 +6,10 @@ import CreateUser from '../views/CreateUser.vue'
 import Dashboard from '../views/Dashboard.vue'
 import ModalNewTask from '../components/ModalNewTask'
 import ModalViewTask from '../components/ModalViewTask'
+import UpdateTask from '../components/UpdateTask'
+import UpdateDate from '../components/UpdateDate'
+import ModalNewSubTask from '../components/ModalNewSubTask'
+import UpdateSubTask from '../components/UpdateSubTask'
 
 Vue.use(VueRouter)
 
@@ -48,6 +52,26 @@ const routes = [
     path: '/modalviewtask/:id',
     name: 'modalviewtask',
     component: ModalViewTask
+  },
+  {
+    path: '/updatetask/:id',
+    name: 'updatetask',
+    component: UpdateTask
+  },
+  {
+    path: '/updatedate/:id',
+    name: 'updatedate',
+    component: UpdateDate
+  },
+  {
+    path: '/modalnewsubtask/:id',
+    name: 'modalnewsubtask',
+    component: ModalNewSubTask
+  },
+  {
+    path: '/updatesubtask/:id',
+    name: 'updatesubtask',
+    component: UpdateSubTask
   },
 ]
 

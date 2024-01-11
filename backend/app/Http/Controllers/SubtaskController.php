@@ -39,15 +39,15 @@ class SubtaskController extends Controller
     public function registerSubtask(Request $request){
 
         $this->validate($request, [
-            'stitle' =>'required|max:100',            
+            'stitle' =>'required|max:35',            
             'sdescription' =>'required|max:50',                      
-            'sstatus' =>'required',           
+            // 'sstatus' =>'required',           
             ]);
 
         $subtask = new Subtask;
         $subtask->stitle = $request->stitle;      
         $subtask->sdescription = $request->sdescription;                
-        $subtask->sstatus = $request->sstatus;        
+        // $subtask->sstatus = $request->sstatus;        
         $subtask->task_id = $request->task_id;     
 
         $subtask->save();
@@ -62,7 +62,7 @@ class SubtaskController extends Controller
         $subtask = Subtask::find($id);
         $subtask->stitle = $request->stitle;        
         $subtask->sdescription = $request->sdescription;                   
-        $subtask->sstatus = $request->sstatus;      
+        // $subtask->sstatus = $request->sstatus;      
                  
         $subtask->save();
 

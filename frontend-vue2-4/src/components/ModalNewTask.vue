@@ -1,37 +1,38 @@
+<template>
+  <div>
+    <a href="#modal_3" class="btn"><label class="nav-add-text">Criar tarefa</label></a>
 
+    <div id="modal_3" class="modal">
+      <div class="modal__content">
 
-<template>  
+        <form id="form">
 
-  <div class="modal">
+          <div>
+            <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
+              v-model="title">
+          </div>
 
-    <form id="form">
+          <div>
+            <input type="name" id="task-description" name="task-description" maxlength="50" placeholder="Descrição"
+              required v-model="description">
+          </div>
 
-      <div>
-        <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
-          v-model="title">
+          <div class="button-date">
+            <img src="../../public/calendario.svg" alt="">
+            <input placeholder="Data de vencimento" class="date" type="text" onfocus="(this.type='date')"
+              onblur="(this.type='text')" id="date" v-model="date">
+          </div>
+
+          <div class="buttons">
+            <a href="#" class="white-button">Cancelar</a>
+            <div class="button" @click="createTask()">
+              <input type="button" class="black-button" value="Criar tarefa">
+            </div>
+          </div>
+
+        </form>
       </div>
-
-      <div>
-        <input type="name" id="task-description" name="task-description" maxlength="60" placeholder="Descrição" required
-          v-model="description">
-      </div>
-     
-      <div class="button-date">
-        <img src="../../public/calendario.svg" alt="">
-        <input placeholder="Data de vencimento" class="date" type="text" onfocus="(this.type='date')"
-          onblur="(this.type='text')" id="date" v-model="date">
-      </div>
-
-      <div class="buttons">
-        <router-link to="/dashboard">
-          <button class="white-button">Cancelar</button>
-        </router-link>
-        <div class="button" @click="createTask()">
-          <input type="button" class="black-button" value="Adicionar post">
-        </div>
-      </div>
-
-    </form>
+    </div>
 
   </div>
 </template>
@@ -39,17 +40,15 @@
 <script>
 import axios from 'axios'
 
-
 export default {
   name: "ModalNewTask",
-
 
   data() {
     return {
       title: null,
       description: null,
       date: null,
-      users_id: null,    
+      users_id: null,
     }
   },
 
@@ -79,30 +78,61 @@ export default {
       axios.post('http://localhost:8000/api/task/register', data)
         .then(function (response) {
           console.log(response);
-          console.log(response);
+          window.location = window.location + '#loaded';
+          window.location.reload();
         })
         .catch(function (error) {
-          console.log(error);
           console.error(error);
         });
-      console.log(data);
-
-      setTimeout(() =>this.$router.push({ name: "dashboard" }), 1000);
     },
-   
   }
 }
 
 </script> 
 
 <style scoped>
-.button-add-task {
-  background-color: transparent;
+body {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn {
   border: none;
-  font-weight: 400;
   color: #81858e;
-  font-size: 15px;
-  cursor: pointer;
+  font-size: 15px;  
+}
+
+.btn img {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: #000000ab;
+  display: grid;
+  place-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: .3s;
+}
+
+.modal:target {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__content {
+  background-color: #fff;
+  width: 678px;
+  height: 216px;
 }
 
 .nav-add {
@@ -111,19 +141,25 @@ export default {
   margin-right: 10px;
 }
 
-.modal {
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.nav-add-text {
+  color: #fff;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: #000000ab;
+  display: grid;
+  place-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: .3s;
+
+}
 
 #form {
   width: 678px;
@@ -131,11 +167,10 @@ export default {
   background-color: #fff;
 }
 
-#task-name {  
+#task-name {
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
-  text-align: left;
   margin-top: 21px;
   margin-left: 25px;
   border: none;
@@ -145,7 +180,6 @@ export default {
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
-  text-align: left;
   margin-top: 15px;
   margin-left: 25px;
   margin-bottom: 20px;
@@ -161,16 +195,16 @@ export default {
   background-color: #fff;
   margin-bottom: 15px;
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
 }
 
-.button-date img{
+.button-date img {
   height: 14px;
   width: 14px;
   margin: 13px 14px 10px 13px;
 }
 
-.date {  
+.date {
   border: none;
   font-size: 14px;
 }
@@ -184,7 +218,7 @@ export default {
 }
 
 .white-button {
-  width: 102px;
+  width: 122px;
   height: 40px;
   border: none;
   background-color: #f7f7f7;
@@ -195,7 +229,7 @@ export default {
   line-height: 17.07px;
   cursor: pointer;
   text-align: center;
-  font-style: Montserrat;
+  padding: 12px 0;
   margin-left: 380px;
 }
 

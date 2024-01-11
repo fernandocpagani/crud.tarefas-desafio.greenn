@@ -1,13 +1,5 @@
-<script setup>
-import { ref } from 'vue'
-
-const open = ref(false)
-</script>
-
 <template>
-  <button @click="open = true" class="button-add-task">Criar subtarefa</button>
 
-  <div v-if="open" class="modal">
 
     <form id="form">
 
@@ -17,23 +9,16 @@ const open = ref(false)
 
       <div>
         <input type="name" id="task-description" name="task-description" placeholder="Descrição" required>
-      </div>
-
-      <div>
-        <button class="button-date"><img src="../../public/calendario.svg" alt=""><input placeholder="Data de vencimento"
-            class="date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date"></button>
-      </div>
-
-      
+      </div>    
 
       <div class="buttons">
-        <button @click="open = false" class="white-button">Cancelar</button>
+        <button class="white-button">Cancelar</button>
 
-        <button @click="open = false" class="black-button">Criar subtarefa</button>
+        <button class="black-button">Criar subtarefa</button>
       </div>
     </form>
 
-  </div>
+ 
 </template>
 
 <style scoped>

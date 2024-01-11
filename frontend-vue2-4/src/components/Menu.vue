@@ -17,45 +17,46 @@ export default {
 </script>
 
 <style scoped>
-
-.main-content{
-    width: 293px; 
-    height: 100vh; 
+.main-content {
+    width: 293px;
+    height: 100%;
+    position: fixed;    
 }
 
-.menu{
-        background-color: #fafafa;
-        width: 293px;
-       padding: 0;
-    }
-    
-    .first-menu-button{
-        background-color:#fafafa;
-        border: none;
-        font-size: 15px;
-        font-weight: 600px;
-        line-height: 18.29px;
-        margin-left: 46px;
-        margin-top: 63px;
-        cursor: pointer;
-    }
+.menu {
+    background-color: #fafafa;
+    width: 293px;
+    padding: 0;
+    margin-top: 70px;
+}
 
-    .first-menu-button img{
-        margin-right: 20px;
-    }
-    
-    .menu-button{
-        background-color:#fafafa;
-        border: none;
-        font-size: 15px;
-        font-weight: 600px;
-        line-height: 18.29px;
-        margin-left: 46px;
-        margin-top: 45px;
-        cursor: pointer;
-    }
+.first-menu-button {
+    background-color: #fafafa;
+    border: none;
+    font-size: 15px;
+    font-weight: 600px;
+    line-height: 18.29px;
+    margin-left: 46px;
+    margin-top: 63px;
+    cursor: pointer;
+}
 
-    .menu-button img{
-        margin-right: 20px;
-    }
+.first-menu-button img {
+    margin-right: 20px;
+}
+
+.menu-button {
+    background-color: #fafafa;
+    border: none;
+    font-size: 15px;
+    font-weight: 600px;
+    line-height: 18.29px;
+    margin-left: 46px;
+    margin-top: 45px;
+    cursor: pointer;
+}
+
+.menu-button img {
+    margin-right: 20px;
+}
 </style>
