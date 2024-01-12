@@ -5,6 +5,8 @@
             <button class="menu-button"><img src="../../public/tarefasdehoje.svg" alt="">Tarefas de hoje</button>
             <button class="menu-button"><img src="../../public/vencidos.svg" alt="">Vencidos</button>
         </div>
+      
+        
     </div>
 </template>
 
@@ -12,6 +14,15 @@
 
 export default {
     name: "Menu",
+    
+  
+    async mounted() { 
+
+        let user = localStorage.getItem('user-info');
+    this.name= JSON.parse(user).user.name[0].toUpperCase();
+    console.log(this.name)
+
+}
 }
 
 </script>

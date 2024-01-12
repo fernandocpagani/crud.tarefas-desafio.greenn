@@ -1,37 +1,39 @@
 <template>
   <div>
-    <b-button v-b-modal.modal-sm variant="primary">Criar tarefa</b-button>
+    <a href="#modal_3" class="btn"><label class="nav-add-text">Criar tarefa</label></a>
 
-    <b-modal id="modal-sm" size="lg" title="Large Modal" style="padding: 0;" centered hide-header hide-footer >
+    <div id="modal_3" class="modal">
+      <div class="modal__content">
 
-      <form id="form">
+        <form id="form">
 
-        <div>
-          <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
-            v-model="title">
-        </div>
-
-        <div>
-          <input type="name" id="task-description" name="task-description" maxlength="50" placeholder="Descrição" required
-            v-model="description">
-        </div>
-
-        <div class="button-date">
-          <img src="../../public/calendario.svg" alt="">
-          <input placeholder="Data de vencimento" class="date" type="text" onfocus="(this.type='date')"
-            onblur="(this.type='text')" id="date" v-model="date">
-        </div>
-
-        <div class="buttons">
-          <a href="#" class="white-button">Cancelar</a>
-          <div class="button" @click="createTask()">
-            <input type="button" class="black-button" value="Criar tarefa">
+          <div>
+            <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
+              v-model="title">
           </div>
-        </div>
 
-      </form>
+          <div>
+            <input type="name" id="task-description" name="task-description" maxlength="50" placeholder="Descrição"
+              required v-model="description">
+          </div>
 
-    </b-modal>
+          <div class="button-date">
+            <img src="../../public/calendario.svg" alt="">
+            <input placeholder="Data de vencimento" class="date" type="text" onfocus="(this.type='date')"
+              onblur="(this.type='text')" id="date" v-model="date">
+          </div>
+
+          <div class="buttons">
+            <a href="#" class="white-button">Cancelar</a>
+            <div class="button" @click="createTask()">
+              <input type="button" class="black-button" value="Criar tarefa">
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -43,13 +45,13 @@ export default {
 
   data() {
     return {
-      modalShow: false,
       title: null,
       description: null,
       date: null,
       users_id: null,
     }
   },
+
   computed: {
     isLogged() {
       if (localStorage.getItem("user-info")) {
@@ -85,11 +87,10 @@ export default {
     },
   }
 }
-</script>
+
+</script> 
 
 <style scoped>
-
-
 body {
   min-height: 100vh;
   display: grid;
@@ -103,7 +104,7 @@ a {
 .btn {
   border: none;
   color: #81858e;
-  font-size: 15px;
+  font-size: 15px;  
 }
 
 .btn img {
@@ -145,7 +146,6 @@ a {
   cursor: pointer;
   margin: 0;
   padding: 0;
-  background-color: #000;
 }
 
 .modal {
@@ -250,25 +250,4 @@ a {
   border-top: solid 1px #e5e5e5;
   padding: 14px 25px;
 }
-
-.btn,
-.btn-secondary {
-  background-color: transparent;
-}
-
-.btn:hover,
-.btn-secondary:hover {
-  background-color: transparent;
-}
-
-.modal-content {
-  background-color: transparent;
-}
-
-.modal-body {
-  padding: 0;
-}
-
-#modal-sm___BV_modal_body_ {
-  padding: 0;
-}</style>
+</style>

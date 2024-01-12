@@ -45,7 +45,7 @@
 
             <div class="right-content">
 
-                <div class="hand">🤘</div>
+                <div class="hand"><img src="../../public/maopng.png" alt="mao"></div>
 
                 <section class="right-text">
                     <h3 class="title-right-content">A fortuna fica ao lado daquele que ousa.</h3>

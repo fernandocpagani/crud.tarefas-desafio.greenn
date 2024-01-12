@@ -76,14 +76,13 @@
           <div class="right-content">
 
             <h4 class="title-right">Criado em</h4>
-            <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{moment(created_at).format('DD/MM/YYYY')}} às {{moment(created_at).format('HH:mm')}}</h5>
-            
+            <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ created_at }}</h5>
+
             <h4 class="title-right">Data de vencimento</h4>
-            <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{moment(finishdate).format('DD/MM/YYYY')}} </h5>
+            <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{ finishdate }} </h5>
 
             <h4 class="title-right">Modificado em</h4>
-            <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">
-              {{moment(updated_at).format('DD/MM/YYYY')}} às {{moment(updated_at).format('HH:mm')}} </h5> 
+            <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{ updated_at }}</h5>
 
             <h4 class="title-right">ID da tarefa</h4>
             <h5 class="info-black">{{ id }}</h5>
@@ -97,7 +96,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import axios from 'axios'
 
 export default {
@@ -131,7 +129,6 @@ export default {
     this.updated_at = result.data.updated_at
     this.status = result.data.status
     this.status = result.data.status
-    this.moment = moment;
 
     {
       axios

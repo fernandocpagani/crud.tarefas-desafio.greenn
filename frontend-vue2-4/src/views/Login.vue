@@ -4,7 +4,7 @@
 
             <div class="left-content">
 
-                <div class="hand">🤘</div>
+                <div class="hand"><img src="../../public/maopng.png" alt="mao"></div>
 
                 <section class="left-text">
                     <h3 class="title-left-content">A fortuna fica ao lado daquele que ousa.</h3>
@@ -84,9 +84,14 @@ export default {
 
         mounted() {
             let user = localStorage.getItem('user-info');
+    this.name= JSON.parse(user).user.name;
+    console.log(this.name)
+    
             if (user) {
                 this.$router.push({ name: "dashboard" })
             }
+
+            
         }
     }
 }
@@ -119,10 +124,11 @@ export default {
 }
 
 .hand {
-    padding-top: 60px;
+    margin-top: 60px;
     margin-left: 65px;
     font-size: 48px;
     border: none;
+    background-color: transparent;
 }
 
 .left-text {
@@ -262,7 +268,7 @@ input {
 }
 
 .left-content:hover .hand {
-    padding-top: 94px;
+    margin-top: 94px;
 }
 
 .left-content:hover .image {

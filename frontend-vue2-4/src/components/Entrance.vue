@@ -7,15 +7,28 @@
 
             <div v-for="task in tasks" :key="task.id">
 
-
                 <div class="tasks">
 
                     <div class="task">
 
                         <div>
-                            <input type="checkbox" id="checkbox-task" class="checkbox-input">
-                            {{ task.status && task.status.pending ? checked : unchecked }}
-                            {{ task.status }}
+
+                        </div>
+
+                        <div>
+                            <input type="checkbox" v-model="toggle" true-value="task.status == 'pending'"
+                                false-value="task.status == 'completed'">
+
+                            <input type="checkbox" id="checkbox-task" class="checkbox-input" v-model="task.status">
+                            <!-- jogar o ifternario na função e chamar no onclick -->
+                            <!-- <button class="checkbutton" @click= "checkTask()">
+                                <div v-if="task.status == 'pending'">
+                                    <img src="../../public/checkvazio.svg" alt="check">
+                                </div>
+                                <div v-else>
+                                    <img src="../../public/checkcheio.svg" alt="check">
+                                </div>
+                            </button> -->
                         </div>
 
                         <div class="task-field">
@@ -24,14 +37,23 @@
 
                             <p class="description">{{ task.description }}</p>
                             <div class="date-counter">
+
                                 <div class="red-date">
-                                    <img src="../../public/datavermelho.svg" alt=""> {{ task.finishdate }}
+                                    <img src="../../public/datavermelho.svg" alt="">
+                                    {{ moment(finishdate).format('DD/MM/YYYY') }}
                                 </div>
                                 <div class="green-date">
-                                    <img src="../../public/dataverde.svg" alt=""> {{ task.finishdate }}
+                                    <img src="../../public/dataverde.svg" alt="">
+                                    {{ moment(finishdate).format('DD/MM/YYYY') }}
                                 </div>
+
+                                <!-- verifyDate será uma função que irá retornar o nome da classe que deve ser aplicada. Se a data já tiver passado, será uma classe, se não, será outra classe -->
+                                <!-- textDate irá retonar o texto que deve ser mostrado. Se a data for igual a data atual, ele mostra "Hoje", caso contrário ele formata a data com o moment -->
+                                <!-- <div :class="verifyDate(task.finishdate)">{{ textDate(task.finishdate) }}</div> -->
+
                                 <div class="counter">
-                                    0/2
+                                    {{ subtasks.filter(sub => sub.task_id == task.id && sub.status == true).length }}/{{
+                                        subtasks.filter(sub => sub.task_id == task.id).length }}
                                 </div>
                             </div>
                         </div>
@@ -50,18 +72,32 @@
 
                     </div>
 
-                    <div v-for="subtask in subtasks" :key="subtask.id">
-                        <div v-if="subtask.task_id == task.id">
-                            
+                    <div class="main-subtask-content">
+
+                        <div v-for="subtask in subtasks.filter(sub => sub.task_id == task.id)" :key="subtask.id">
+
                             <div class="sub-task-content">
 
                                 <div class="sub-task">
+
                                     <div>
-                                        <input type="checkbox" class="sub-checkbox-task"> {{ subtask.sstatus }}
+                                        <input type="checkbox" class="sub-checkbox-task">
                                     </div>
+
                                     <div class="subtask-text">
-                                        <label class="title-task">{{ subtask.stitle }}</label>
-                                        <p class="description-subtask">{{ subtask.sdescription }}</p>
+
+                                        <b-button v-b-toggle.collapse-2 class="m-1"
+                                            style="padding: 0; background-color: transparent; border: none; height: 20px;"><label
+                                                class="title-task">{{ subtask.stitle
+                                                }}</label></b-button>
+
+                                        <b-collapse id="collapse-2" style="padding-top: 0;">
+                                            <b-card
+                                                style="padding: 0; background-color: transparent; border: none; height: 20px;">
+                                                <p class="description-subtask">{{ subtask.sdescription }}</p>
+                                            </b-card>
+                                        </b-collapse>
+
                                     </div>
                                 </div>
 
@@ -76,7 +112,9 @@
                             </div>
 
                         </div>
+
                     </div>
+
                 </div>
 
                 <div class="add-task">
@@ -95,7 +133,7 @@
 
 <script>
 import UpdateTask from './../components/UpdateTask.vue'
-
+import moment from 'moment'
 import axios from 'axios'
 
 export default {
@@ -103,10 +141,6 @@ export default {
     components: {
         UpdateTask,
     },
-
-    data: () => ({
-        dialog: false,
-    }),
 
     data() {
 
@@ -119,8 +153,10 @@ export default {
             title: null,
             description: null,
             date: null,
+            status: null,
+            sstatus: null,
         }
-    }, 
+    },
 
     async mounted() {
         {
@@ -128,6 +164,7 @@ export default {
                 .get('http://127.0.0.1:8000/api/task')
                 .then((response) => {
                     this.tasks = response.data
+                    this.moment = moment;
                 })
         }
         {
@@ -135,7 +172,7 @@ export default {
                 .get('http://localhost:8000/api/subtask')
                 .then((response) => {
                     this.subtasks = response.data
-
+                    this.moment = moment;
                 })
         }
         {
@@ -148,14 +185,14 @@ export default {
     },
 
     methods: {
+        // async checkTask() {
+        //     const result = await axios.put(`http://localhost:8000/api/task/` + this.$route.params.id + `/update`,
+        //         {
+        //             status: this.status,
+        //             // data:{ task.status == 'pending' ? task.status = 'completed' : task.status = 'pending'}
 
-        sumSubTask() {
-            const resulttask = axios.get(`http://localhost:8000/api/task`)
-
-
-            console.log(resulttask)
-
-        },
+        //         });
+        // },
 
         async deleteTask(id) {
             axios.delete(`http://localhost:8000/api/task/${id}/delete`)
@@ -217,6 +254,11 @@ export default {
     transition: .5;
 }
 
+.checkbutton {
+    border: none;
+    background-color: transparent;
+}
+
 .checkbox-input,
 .sub-checkbox-task {
     all: unset;
@@ -225,6 +267,7 @@ export default {
     width: 16px;
     height: 16px;
     display: inline-block;
+    margin-top: 8px;
 }
 
 .checkbox-input:checked,
@@ -252,27 +295,20 @@ export default {
 }
 
 .description-subtask {
-
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
     color: #81858e;
-    padding-top: 7px;
     padding-bottom: 0px;
     width: 200px;
     margin-bottom: 0px;
-
 }
 
 .menu-subtasks button {
-    padding: 20px 0px 20px 30px;
+    padding-left: 30px;
     border: none;
     background-color: transparent;
     display: none;
-}
-
-.sub-task-content:hover {
-    background-color: #fafafa;
 }
 
 .sub-task-content:hover .menu-subtasks button {
@@ -301,12 +337,20 @@ export default {
     width: 125px;
 }
 
+.red-date img {
+    margin-right: 10px;
+}
+
 .green-date {
     font-size: 14px;
     color: #009488;
     background-color: #e5f4f3;
     padding: 4px 7px;
     width: 125px;
+}
+
+.green-date img {
+    margin-right: 10px;
 }
 
 .date-counter {
@@ -341,11 +385,17 @@ export default {
     cursor: pointer;
 }
 
+.main-subtask-content:hover{
+    background-color: #fafafa;
+}
+
 .sub-task-content {
     box-sizing: border-box;
-    border: solid 1px #e5e5e5;
+    border-left: solid 1px #e5e5e5;
+    border-right: solid 1px #e5e5e5;
     border-top: none;
-    padding: 10px 25px 10px 65px;
+    padding-left: 65px;
+    padding-right: 25px;
     display: flex;
     flex-direction: row;
 
@@ -356,14 +406,14 @@ export default {
     flex-direction: row;
     box-sizing: border-box;
     padding: 10px 0;
-
+    align-items: center;
+    align-content: center;
 }
 
 .add-task {
     padding: 15px 25px;
     box-sizing: border-box;
     border: solid 1px #e5e5e5;
-    border-top: none;
     color: #81858e;
     font-size: 15px;
     margin-bottom: 20px;
@@ -394,7 +444,10 @@ export default {
     margin-left: 20px
 }
 
+.card-body {
+    padding: 0;
+}
+
 .subtask-text img {
     margin-right: 10px;
-}
-</style>
+}</style>

@@ -1,7 +1,7 @@
 <template>
     <nav>
         <div class="nav-content">
-            <div class="hand">🤘</div>
+            <div class="hand"><img src="../../public/maonavbar.png" alt="mao"></div>
 
             <div class="menu">
                 <img class="nav-add" src="../../public/adicionar.svg" alt="adicionar">
@@ -9,10 +9,9 @@
                     <ModalNewTask />
                 </button>
                 <img class="nav-button2" src="../../public/interrogacao.svg" alt="interrogacao">
-                <img class="nav-button" src="../../public/sino.svg" alt="sino">
-                <img class="nav-button" src="../../public/circulo.svg" alt="letra nome">
+                <img class="nav-button" src="../../public/sino.svg" alt="sino">            
+                <label class="first-letter">{{ name }}</label>
             </div>
-
         </div>
     </nav>
 </template>
@@ -26,6 +25,20 @@ export default {
     components: {
         ModalNewTask
     },
+    data() {
+      return {
+          name: null,
+          
+      }
+  },
+
+    mounted() {  
+
+let user = localStorage.getItem('user-info');
+this.name= JSON.parse(user).user.name[0].toUpperCase();
+console.log(this.name)
+
+}
 }
 
 </script>
@@ -35,6 +48,7 @@ nav {
     background-color: #000;
     width: 100%;
     position: fixed;
+    padding: 0 5px;
 }
 
 .nav-content {
@@ -49,7 +63,7 @@ nav {
 
 .hand {
     font-size: 28px;
-    margin-left: 31px;
+    margin-left: 26px;
 }
 
 .menu {
@@ -78,6 +92,18 @@ nav {
 
 .nav-button {
     padding: 0 22.5px;
+}
+
+.first-letter{
+    margin: 0 22.5px; 
+    height: 30px;
+    width: 30px;
+    background-color: #009488;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;  
+    border-radius: 100%;  
+    font-size: 20px;    
 }
 
 .nav-button2 {
