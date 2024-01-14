@@ -261,16 +261,17 @@ p {
 }
 
 .image {
-    margin-left: -135px;
+    margin-left: 35px;
     height: 100px;
-    width: 135px;
+    width: 100px;
     background-image: url(./../../public/img3.jpg);
     transition: 0.5;
+    border: none;
 }
 
 .degrade {
     height: 100px;
-    width: 235px;
-    background: linear-gradient(270deg, #000 30%, #fff);
+    width: 100px;
+    background: linear-gradient(270deg, #0000005b 1%, #fff );
 }
 </style>

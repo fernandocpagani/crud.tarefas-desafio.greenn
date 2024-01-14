@@ -1,99 +1,108 @@
 <template>
-
   <div id="main-container">
 
-        <nav>
-          <div class="date">
-            <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
-          </div>
-          <div class="buttons-nav-right">
-            <form>
+    <nav>
+      <div class="date">
+        <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
+      </div>
+      <div class="buttons-nav-right">
+        <form>
 
-              <div>
-                <ul class="main-dropdown">
-                  <li class="dropdown-hover">
-                    <ul class="dropdown">
-                      <li class="black-li"><img src="../../public/copiarlink.svg" alt="copiar link">Copiar link da tarefa
-                      </li>
-                      <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa</li>
-                      <li class="black-li" @click="window.print()"><img src="../../public/imprimir.svg" alt="imprimir">Imprimir tarefa</li>
-                      <li class="red-li" @click="deleteTask(id)"><img src="../../public/lixeiravermelha.svg" alt="excluir">Excluir tarefa</li>
-                    </ul>
+          <div>
+            <ul class="main-dropdown">
+              <li class="dropdown-hover">
+                <ul class="dropdown">
+                  <li class="black-li"><img src="../../public/copiarlink.svg" alt="copiar link">Copiar link da tarefa
                   </li>
+                  <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa</li>
+                  <li class="black-li" @click="window.print()"><img src="../../public/imprimir.svg"
+                      alt="imprimir">Imprimir tarefa</li>
+                  <li class="red-li" @click="deleteTask(id)"><img src="../../public/lixeiravermelha.svg"
+                      alt="excluir">Excluir tarefa</li>
                 </ul>
-              </div>
-
-
-              <button class="x"> <img src="../../public/3pontos.svg" alt="3pontos"></button>
-
-              <button class="x"><img src="../../public/x.svg" alt="x"></button>
-            </form>
-          </div>
-        </nav>
-
-        <div class="sub-container">
-
-          <div class="left-content">
-
-            <div class="task">
-
-              <div>
-                <input type="checkbox" id="checkbox-task">
-              </div>
-
-              <div class="task-field">
-                <h2 class="modal__title">{{ title }}</h2>
-                <p class="description">{{ description }}</p>
-
-              </div>
-            </div>
-
-            <h3 class="h3-sub-task">Subtarefas</h3>
-
-            <div class="sub-task-content" v-for="subtask in subtasks " :key="subtask.id">
-
-              <div class="sub-task" v-if="subtask.task_id == id">
-
-                <div>
-                  <input type="checkbox" id="sub-checkbox-task">
-                </div>
-
-                <div class="sub-task-item">
-                  <label class="title-sub-task">{{ subtask.stitle }} </label>
-                  <p class="description">{{ subtask.sdescription }}</p>
-                  <div class="menu-tasks">
-                    <button><img src="../../public/lapis.svg" alt="editar"></button>
-                    <button><img src="../../public/calendario.svg" alt="calendario"></button>
-                    <button><img src="../../public/lixeiracinza.svg" alt="excluir"></button>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
+              </li>
+            </ul>
           </div>
 
-          <div class="right-content">
 
-            <h4 class="title-right">Criado em</h4>
-            <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{moment(created_at).format('DD/MM/YYYY')}} às {{moment(created_at).format('HH:mm')}}</h5>
-            
-            <h4 class="title-right">Data de vencimento</h4>
-            <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{moment(finishdate).format('DD/MM/YYYY')}} </h5>
+          <button class="x"> <img src="../../public/3pontos.svg" alt="3pontos"></button>
 
-            <h4 class="title-right">Modificado em</h4>
-            <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">
-              {{moment(updated_at).format('DD/MM/YYYY')}} às {{moment(updated_at).format('HH:mm')}} </h5> 
+          <button class="x"><img src="../../public/x.svg" alt="x"></button>
+        </form>
+      </div>
+    </nav>
 
-            <h4 class="title-right">ID da tarefa</h4>
-            <h5 class="info-black">{{ id }}</h5>
+    <div class="sub-container">
+
+      <div class="left-content">
+
+        <div class="task">
+
+          <div>
+            <input type="checkbox" id="checkbox-task">
+          </div>
+
+          <div class="task-field">
+            <h2 class="modal__title">{{ title }}</h2>
+            <p class="description">{{ description }}</p>
+
+          </div>
+        </div>
+
+        <h3 class="h3-sub-task">Subtarefas</h3>
+
+        <div class="sub-task-content" v-for="subtask in subtasks " :key="subtask.id">
+
+          <div class="sub-task" v-if="subtask.task_id == id">
+
+            <div>
+              <input type="checkbox" id="sub-checkbox-task">
+            </div>
+
+            <div class="sub-task-item">
+
+              <div class="subtask-text">
+                <label class="title-sub-task">{{ subtask.stitle }} </label>
+                <p class="description">{{ subtask.sdescription }}</p>
+              </div>
+
+              <div class="menu-tasks">
+                <button><router-link :to="'/updatesubtask/' + subtask.id" class="title-task"><img
+                                                src="../../public/lapis.svg" alt="lapis"></router-link></button>
+
+                <button @click="deleteSubTask(id)" ><img class="item-menu-task2" src="../../public/lixeiracinza.svg" alt="excluir"></button>
+              </div>
+
+            </div>
 
           </div>
 
         </div>
-     
       </div>
 
+      <div class="right-content">
+
+        <h4 class="title-right">Criado em</h4>
+        <h5 class="info-black"><img src="../../public/datapreto.svg"
+            alt="calendario-preto">{{ moment(created_at).format('DD/MM/YYYY') }} às {{ moment(created_at).format('HH:mm') }}
+        </h5>
+
+        <h4 class="title-right">Data de vencimento</h4>
+        <h5 class="info-green"><img src="../../public/dataverde.svg"
+            alt="calendario-verde">{{ moment(finishdate).format('DD/MM/YYYY') }} </h5>
+
+        <h4 class="title-right">Modificado em</h4>
+        <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">
+          {{ moment(updated_at).format('DD/MM/YYYY') }} às {{ moment(updated_at).format('HH:mm') }} </h5>
+
+        <h4 class="title-right">ID da tarefa</h4>
+        <h5 class="info-black">{{ id }}</h5>
+
+      </div>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -106,16 +115,16 @@ export default {
 
   data() {
     return {
-      title: null,
-      description: null,
-      finishdate: null,
-      status: null,
-      id: null,
-      updated_at: null,
-      created_at: null,
-      stitle: null,
+      tasks: [],
       subtask: null,
       subtasks: [],
+      stitle: null,
+      id: null,
+      title: null,
+      description: null,
+      date: null,
+      status: null,
+      sstatus: null,
     }
   },
 
@@ -143,21 +152,27 @@ export default {
     }
   },
   methods: {
-        async deleteTask(id) {
-            axios.delete(`http://localhost:8000/api/task/${id}/delete`)
-                .then(() => {
-                  
-        this.$router.push({ name: 'dashboard' });
-      
-                })
-        },
-      }
+    async deleteTask(id) {
+      axios.delete(`http://localhost:8000/api/task/${id}/delete`)
+        .then(() => {
+
+          this.$router.push({ name: 'dashboard' });
+
+        })
+    },
+    async deleteSubTask(id) {
+      axios.delete(`http://localhost:8000/api/subtask/${id}/delete`)
+        .then(() => {
+          window.location = window.location + '#loaded';
+          window.location.reload();
+        })
+    },
+  }
 }
 </script>    
 
 
 <style scoped>
-
 .modal {
   position: fixed;
   z-index: 999;
@@ -171,11 +186,11 @@ export default {
   align-items: center;
 }
 
- #main-container {
+#main-container {
   width: 819px;
   height: 613px;
   background-color: #fff;
-} 
+}
 
 nav {
   display: flex;
@@ -207,12 +222,12 @@ nav {
 }
 
 .dropdown-hover {
-  position: absolute; 
-   display: none; 
+  position: absolute;
+  display: none;
   margin-top: 25px;
 }
 
-.dropdown{
+.dropdown {
   list-style: none;
   padding: 30px;
   width: 246px;
@@ -318,6 +333,7 @@ input:checked {
 
 .description {
   margin-left: 20px;
+  margin-bottom: 0;
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
@@ -359,19 +375,26 @@ input:checked {
 }
 
 .title-sub-task {
-  width: 290px;
+  width: 356px;
   margin-left: 20px;
 }
 
 .menu-tasks {
   display: flex;
   align-items: center;
-  display: none;
+  display: block;
+  margin: auto 0;
+}
+
+.item-menu-task2 {
+  padding: 0 11px 0 28px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .menu-tasks button {
   border: none;
-  padding-left: 30px;
   background-color: transparent;
   cursor: pointer;
 }

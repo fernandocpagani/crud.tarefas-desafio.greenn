@@ -9,6 +9,7 @@ import ModalViewTask from '../components/ModalViewTask'
 import UpdateTask from '../components/UpdateTask'
 import UpdateDate from '../components/UpdateDate'
 import ModalNewSubTask from '../components/ModalNewSubTask'
+import ModalUpdateTask from '../components/ModalUpdateTask'
 import UpdateSubTask from '../components/UpdateSubTask'
 
 Vue.use(VueRouter)
@@ -72,6 +73,11 @@ const routes = [
     path: '/updatesubtask/:id',
     name: 'updatesubtask',
     component: UpdateSubTask
+  },
+  {
+    path: '/modalupdatetask/:id',
+    name: 'modalupdatetask',
+    component: ModalUpdateTask
   },
 ]
 

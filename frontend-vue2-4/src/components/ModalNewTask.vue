@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-button v-b-modal.modal-sm variant="primary">Criar tarefa</b-button>
+    <b-button v-b-modal.modal-sm variant="black">Criar tarefa</b-button>
 
-    <b-modal id="modal-sm" size="lg" title="Large Modal" style="padding: 0;" centered hide-header hide-footer >
+    <b-modal id="modal-sm" size="sm" title="Small Modal" body-class="p-0"  hide-header hide-footer centered >
 
       <form id="form">
-
+       
         <div>
           <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
             v-model="title">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="buttons">
-          <a href="#" class="white-button">Cancelar</a>
+          <a href="/dashboard" class="white-button">Cancelar</a>
           <div class="button" @click="createTask()">
             <input type="button" class="black-button" value="Criar tarefa">
           </div>
@@ -90,6 +90,7 @@ export default {
 <style scoped>
 
 
+
 body {
   min-height: 100vh;
   display: grid;
@@ -104,61 +105,6 @@ a {
   border: none;
   color: #81858e;
   font-size: 15px;
-}
-
-.btn img {
-  font-size: 14px;
-  margin-right: 10px;
-}
-
-.modal {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  background-color: #000000ab;
-  display: grid;
-  place-content: center;
-  visibility: hidden;
-  opacity: 0;
-  transition: .3s;
-}
-
-.modal:target {
-  opacity: 1;
-  visibility: visible;
-}
-
-.modal__content {
-  background-color: #fff;
-  width: 678px;
-  height: 216px;
-}
-
-.nav-add {
-  height: 14px;
-  width: 14px;
-  margin-right: 10px;
-}
-
-.nav-add-text {
-  color: #fff;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-  background-color: #000;
-}
-
-.modal {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  background-color: #000000ab;
-  display: grid;
-  place-content: center;
-  visibility: hidden;
-  opacity: 0;
-  transition: .3s;
-
 }
 
 #form {
@@ -254,21 +200,16 @@ a {
 .btn,
 .btn-secondary {
   background-color: transparent;
+  color:#fff
 }
 
 .btn:hover,
 .btn-secondary:hover {
   background-color: transparent;
+  color: #fff;
 }
 
 .modal-content {
   background-color: transparent;
 }
-
-.modal-body {
-  padding: 0;
-}
-
-#modal-sm___BV_modal_body_ {
-  padding: 0;
-}</style>
+</style>

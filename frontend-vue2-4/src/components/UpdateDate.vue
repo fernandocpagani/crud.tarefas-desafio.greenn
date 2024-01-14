@@ -54,8 +54,6 @@ export default {
   async mounted() {
 
       const result = await axios.get(`http://localhost:8000/api/task/` + this.$route.params.id)
-      console.log(result.data)
-
       this.date = result.data.finishdate     
   }
 

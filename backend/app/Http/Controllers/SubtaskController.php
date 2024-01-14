@@ -47,8 +47,8 @@ class SubtaskController extends Controller
         $subtask = new Subtask;
         $subtask->stitle = $request->stitle;      
         $subtask->sdescription = $request->sdescription;                
-        // $subtask->sstatus = $request->sstatus;        
         $subtask->task_id = $request->task_id;     
+        // $subtask->sstatus = $request->sstatus;        
 
         $subtask->save();
         return response()->json($subtask);
@@ -63,6 +63,15 @@ class SubtaskController extends Controller
         $subtask->stitle = $request->stitle;        
         $subtask->sdescription = $request->sdescription;                   
         // $subtask->sstatus = $request->sstatus;      
+                 
+        $subtask->save();
+
+        return response()->json($subtask);
+    }
+
+    public function updateSubtaskStatus($id, Request $request){
+        $subtask = Subtask::find($id);                        
+        $subtask->sstatus = $request->sstatus;      
                  
         $subtask->save();
 

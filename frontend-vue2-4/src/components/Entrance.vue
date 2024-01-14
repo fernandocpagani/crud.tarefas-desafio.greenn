@@ -7,6 +7,8 @@
 
             <div v-for="task in tasks" :key="task.id">
 
+                <!-- TASKS -->
+
                 <div class="tasks">
 
                     <div class="task">
@@ -16,8 +18,6 @@
                         </div>
 
                         <div>
-                            <input type="checkbox" v-model="toggle" true-value="task.status == 'pending'"
-                                false-value="task.status == 'completed'">
 
                             <input type="checkbox" id="checkbox-task" class="checkbox-input" v-model="task.status">
                             <!-- jogar o ifternario na função e chamar no onclick -->
@@ -33,18 +33,166 @@
 
                         <div class="task-field">
 
-                            <router-link :to="'/modalviewtask/' + task.id" class="title-task">{{ task.title }}</router-link>
+                            <!-- MODAL VIEW TASK -->
+
+                            <div>
+
+                                <b-button v-b-modal.modal-sm="'modalviewtask' + task.id" variant="black" body-class="p-0">
+                                    <h3 class="title-task">{{ task.title }}</h3>
+                                </b-button>
+
+                                <b-modal :id="'modalviewtask' + task.id" size="sm" title="Small Modal" body-class="p-0"
+                                    hide-header hide-footer centered>
+
+                                    <div id="main-container">
+
+                                        <nav>
+                                            <div class="date-view">
+                                                <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
+                                            </div>
+                                            <div class="buttons-nav-right">
+                                                <form>
+
+                                                    <div>
+                                                        <ul class="main-dropdown">
+                                                            <li class="dropdown-hover">
+                                                                <ul class="dropdown">
+                                                                    <li class="black-li"><img
+                                                                            src="../../public/copiarlink.svg"
+                                                                            alt="copiar link">Copiar link da tarefa
+                                                                    </li>
+                                                                    <li class="black-li"><img
+                                                                            src="../../public/duplicar.svg"
+                                                                            alt="duplicar tarefa">Duplicar tarefa</li>
+                                                                    <li class="black-li" @click="window.print()"><img
+                                                                            src="../../public/imprimir.svg"
+                                                                            alt="imprimir">Imprimir tarefa</li>
+                                                                    <li class="red-li" @click="deleteTask(id)"><img
+                                                                            src="../../public/lixeiravermelha.svg"
+                                                                            alt="excluir">Excluir tarefa</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+
+                                                    <button class="x"> <img src="../../public/3pontos.svg"
+                                                            alt="3pontos"></button>
+
+                                                    <button class="x"><img src="../../public/x.svg" alt="x"></button>
+                                                </form>
+                                            </div>
+                                        </nav>
+
+                                        <div class="sub-container">
+
+                                            <div class="left-content">
+
+                                                <div class="task-view">
+
+                                                    <div>
+                                                        <input type="checkbox" class="sub-checkbox-task">
+                                                    </div>
+
+                                                    <div class="task-field-view">
+                                                        <h2 class="title-view">{{ task.title }}</h2>
+                                                        <p class="description">{{ task.description }}</p>
+
+                                                    </div>
+                                                </div>
+
+                                                <h3 class="h3-sub-task">Subtarefas</h3>
+
+                                                <div class="sub-task-content-view" v-for="subtask in subtasks "
+                                                    :key="subtask.id">
+
+                                                    <div class="sub-task-view" v-if="subtask.task_id == task.id">
+
+                                                        <div>
+                                                            <input type="checkbox" class="sub-checkbox-task">
+                                                        </div>
+
+                                                        <div class="sub-task-item">
+
+                                                            <div class="subtask-text-view">
+                                                                <label class="title-sub-task-view">{{ subtask.stitle }}
+                                                                </label>
+                                                                <p class="subtask-description">{{ subtask.sdescription }}
+                                                                </p>
+                                                            </div>
+
+                                                            <div class="menu-tasks-view">
+                                                                <b-button
+                                                                    v-b-modal.modal-sm="'modalupdatesubtask' + subtask.id"
+                                                                    variant="black" body-class="p-0"><img
+                                                                        src="../../public/lapis.svg" alt="lapis"
+                                                                        class="button-icon-date"></b-button>
+
+
+                                                                <button @click="deleteSubTask(subtask.id)"><img
+                                                                        class="item-menu-task2"
+                                                                        src="../../public/lixeiracinza.svg"
+                                                                        alt="excluir"></button>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="right-content">
+
+                                                <h4 class="title-right">Criado em</h4>
+                                                <h5 class="info-black"><img src="../../public/datapreto.svg"
+                                                        alt="calendario-preto">{{
+                                                            moment(task.created_at).format('DD/MM/YYYY') }}
+                                                    às {{ moment(created_at).format('HH:mm') }}
+                                                </h5>
+
+                                                <h4 class="title-right">Data de vencimento</h4>
+                                                <h5 class="info-green"><img src="../../public/dataverde.svg"
+                                                        alt="calendario-verde">{{
+                                                            moment(task.finishdate).format('DD/MM/YYYY') }}
+                                                </h5>
+
+                                                <h4 class="title-right">Modificado em</h4>
+                                                <h5 class="info-black"><img src="../../public/datapreto.svg"
+                                                        alt="calendario-preto">
+                                                    {{ moment(task.updated_at).format('DD/MM/YYYY') }} às {{
+                                                        moment(task.updated_at).format('HH:mm') }} </h5>
+
+                                                <h4 class="title-right">ID da tarefa</h4>
+                                                <h5 class="info-black">{{ task.id }}</h5>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </b-modal>
+                            </div>
+
+                            <!-- MODAL VIEW TASK - END -->
 
                             <p class="description">{{ task.description }}</p>
                             <div class="date-counter">
 
-                                <div class="red-date">
-                                    <img src="../../public/datavermelho.svg" alt="">
-                                    {{ moment(finishdate).format('DD/MM/YYYY') }}
+                                <div v-if="task.finishdate >= moment().format('YYYY-MM-DD')">
+
+                                    <div class="green-date">
+                                        <img src="../../public/dataverde.svg" alt="">
+                                        {{ moment(task.finishdate).format('DD/MM/YYYY') }}
+                                    </div>
+
                                 </div>
-                                <div class="green-date">
-                                    <img src="../../public/dataverde.svg" alt="">
-                                    {{ moment(finishdate).format('DD/MM/YYYY') }}
+
+                                <div v-else>
+                                    <div class="red-date">
+                                        <img src="../../public/datavermelho.svg" alt="">
+                                        {{ moment(task.finishdate).format('DD/MM/YYYY') }}
+                                    </div>
                                 </div>
 
                                 <!-- verifyDate será uma função que irá retornar o nome da classe que deve ser aplicada. Se a data já tiver passado, será uma classe, se não, será outra classe -->
@@ -60,17 +208,79 @@
 
                         <div class="menu-tasks">
 
-                            <button> <router-link :to="'/updatetask/' + task.id" class="title-task"><img
-                                        src="../../public/lapis.svg" alt="lapis"></router-link></button>
+                            <!-- MODAL UPDATE TASK -->
 
-                            <button><router-link :to="'/updatedate/' + task.id" class="title-task"><img
-                                        src="../../public/calendario.svg" alt="lapis"></router-link></button>
+                            <div>
 
-                            <button @click="deleteTask(task.id)"><img src="../../public/lixeiracinza.svg"
-                                    alt="excluir"></button>
+                                <b-button v-b-modal.modal-sm="'modalupdatetask' + task.id" variant="black"
+                                    body-class="p-0"><img src="../../public/lapis.svg" alt="lapis"></b-button>
+
+                                <b-modal :id="'modalupdatetask' + task.id" size="sm" title="Small Modal" body-class="p-0"
+                                    hide-header hide-footer centered>
+
+                                    <form id="form">
+
+                                        <div>
+                                            <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa"
+                                                maxlength="30" required v-model="title">
+                                        </div>
+
+                                        <div>
+                                            <input type="name" id="task-description" name="task-description" maxlength="50"
+                                                placeholder="Descrição" required v-model="description">
+                                        </div>
+
+                                        <div class="buttons">
+                                            <router-link :to="'/dashboard'"><button
+                                                    class="white-button">Cancelar</button></router-link>
+                                            <div class="button" @click="updateTask(task.id)">
+                                                <input type="button" class="black-button" value="Atualizar tarefa">
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </b-modal>
+                            </div>
+
+                            <!-- MODAL UPDATE TASK DATE -->
+
+                            <div>
+
+                                <b-button v-b-modal.modal-sm="'modalupdatetaskdate' + task.id" variant="black"
+                                    body-class="p-0"><img src="../../public/calendario.svg" alt="calendario"
+                                        class="button-icon-date"></b-button>
+
+                                <b-modal :id="'modalupdatetaskdate' + task.id" size="sm" title="Small Modal"
+                                    body-class="p-0" hide-header hide-footer centered>
+
+                                    <form id="form-date">
+
+                                        <div class="button-date">
+                                            <img src="../../public/calendario.svg" alt="">
+                                            <input placeholder="Data de vencimento" class="date" type="text"
+                                                onfocus="(this.type='date')" onblur="(this.type='text')" id="date"
+                                                v-model="finishdate">
+                                        </div>
+
+                                        <div class="buttons-date">
+                                            <router-link :to="'/dashboard'"><button
+                                                    class="white-button">Cancelar</button></router-link>
+                                            <div class="button" @click="updateDate(task.id)">
+                                                <input type="button" class="black-button" value="Atualizar data">
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </b-modal>
+                            </div>
+
+                            <button @click="deleteTask(task.id)" class="trash-button"><img
+                                    src="../../public/lixeiracinza.svg" alt="excluir"></button>
                         </div>
 
                     </div>
+
+                    <!-- SUBTASK -->
 
                     <div class="main-subtask-content">
 
@@ -86,12 +296,12 @@
 
                                     <div class="subtask-text">
 
-                                        <b-button v-b-toggle.collapse-2 class="m-1"
+                                        <b-button v-b-toggle.collapse-2 class="m-0"
                                             style="padding: 0; background-color: transparent; border: none; height: 20px;"><label
-                                                class="title-task">{{ subtask.stitle
+                                                class="title-subtask">{{ subtask.stitle
                                                 }}</label></b-button>
 
-                                        <b-collapse id="collapse-2" style="padding-top: 0;">
+                                        <b-collapse id="collapse-2" style="padding-top: 7px; ">
                                             <b-card
                                                 style="padding: 0; background-color: transparent; border: none; height: 20px;">
                                                 <p class="description-subtask">{{ subtask.sdescription }}</p>
@@ -102,8 +312,40 @@
                                 </div>
 
                                 <div class="menu-subtasks">
-                                    <button><router-link :to="'/updatesubtask/' + task.id" class="title-task"><img
-                                                src="../../public/lapis.svg" alt="lapis"></router-link></button>
+
+                                    <!-- MODAL UPDATE SUBTASK -->
+
+                                    <b-button v-b-modal.modal-sm="'modalupdatesubtask' + subtask.id" variant="black"
+                                        body-class="p-0"><img src="../../public/lapis.svg" alt="lapis"
+                                            class="button-icon-date"></b-button>
+
+                                    <b-modal :id="'modalupdatesubtask' + subtask.id" size="sm" title="Small Modal"
+                                        body-class="p-0" hide-header hide-footer centered>
+
+                                        <form id="form">
+
+                                            <div>
+                                                <input type="name" id="task-name" name="task-name"
+                                                    placeholder="Nome da tarefa" maxlength="35" required v-model="stitle">
+                                            </div>
+
+                                            <div>
+                                                <input type="name" id="task-description" name="task-description"
+                                                    maxlength="50" placeholder="Descrição" required v-model="sdescription">
+                                            </div>
+
+                                            <div class="buttons">
+                                                <router-link :to="'/dashboard'"><button
+                                                        class="white-button-new-subtask">Cancelar</button></router-link>
+                                                <div class="button" @click="updateSubTask(subtask.id)">
+                                                    <input type="button" class="black-button-new-subtask"
+                                                        value="Atualizar subtarefa">
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+                                    </b-modal>
 
                                     <button> <img src="../../public/lixeiracinza.svg" alt="excluir"
                                             @click="deleteSubTask(subtask.id)"></button>
@@ -119,8 +361,40 @@
 
                 <div class="add-task">
 
-                    <router-link :to="'/modalnewsubtask/' + task.id" class="subtask-text"><img
-                            src="../../public/adicionarcinza.svg" alt="adicionar">Criar subtarefa</router-link>
+                    <!-- CREATE NEW SUBTASK -->
+
+                    <div>
+
+                        <b-button v-b-modal.modal-sm="'modalnewsubtask' + task.id" variant="black" class="subtask-text"
+                            body-class="p-0"><img src="../../public/adicionarcinza.svg" alt="adicionar">Criar
+                            subtarefa</b-button>
+
+                        <b-modal :id="'modalnewsubtask' + task.id" size="sm" title="Small Modal" body-class="p-0"
+                            hide-header hide-footer centered>
+
+                            <form id="form">
+
+                                <div>
+                                    <input type="name" id="task-name" name="task-name" placeholder="Nome da subtarefa"
+                                        maxlength="30" required v-model="stitle">
+                                </div>
+
+                                <div>
+                                    <input type="name" id="task-description" name="task-description" maxlength="50"
+                                        placeholder="Descrição" required v-model="sdescription">
+                                </div>
+
+                                <div class="buttons">
+                                    <router-link :to="'/dashboard'"><button
+                                            class="white-button">Cancelar</button></router-link>
+                                    <div class="button" @click="createNewSubTask(task.id)">
+                                        <input type="button" class="black-button" value="Criar subtarefa">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </b-modal>
+                    </div>
 
                 </div>
 
@@ -132,15 +406,11 @@
 </template>
 
 <script>
-import UpdateTask from './../components/UpdateTask.vue'
 import moment from 'moment'
 import axios from 'axios'
 
 export default {
     name: "Entrance",
-    components: {
-        UpdateTask,
-    },
 
     data() {
 
@@ -158,33 +428,48 @@ export default {
         }
     },
 
-    async mounted() {
-        {
-            axios
-                .get('http://127.0.0.1:8000/api/task')
-                .then((response) => {
-                    this.tasks = response.data
-                    this.moment = moment;
-                })
-        }
-        {
-            axios
-                .get('http://localhost:8000/api/subtask')
-                .then((response) => {
-                    this.subtasks = response.data
-                    this.moment = moment;
-                })
-        }
-        {
+    computed: {
 
-            const result = await axios.get(`http://localhost:8000/api/task/` + this.$route.params.id)
-
-            this.title = result.data.title
-            this.description = result.data.description
-        }
     },
 
     methods: {
+
+        async updateDate(id) {
+
+            const result = await axios.put(`http://localhost:8000/api/task/${id}/updatedate`,
+                {
+                    finishdate: this.finishdate,
+                });
+            if (result.status == 200) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        },
+
+        async updateSubTask(id) {
+            const result = await axios.put(`http://localhost:8000/api/subtask/${id}/update`,
+                {
+                    stitle: this.stitle,
+                    sdescription: this.sdescription,
+                });
+            if (result.status == 200) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        },
+
+        async updateTask(id) {
+            const result = await axios.put(`http://localhost:8000/api/task/${id}/update`,
+                {
+                    title: this.title,
+                    description: this.description,
+                });
+            if (result.status == 200) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        },
+
         // async checkTask() {
         //     const result = await axios.put(`http://localhost:8000/api/task/` + this.$route.params.id + `/update`,
         //         {
@@ -210,19 +495,54 @@ export default {
                 })
         },
 
-        async updateTask() {
-
-            const result = await axios.put(`http://localhost:8000/api/task/` + this.$route.params.id + `/update`,
-                {
-                    title: this.title,
-                    description: this.description,
-                });
-            if (result.status == 200) {
-                this.$router.push({ name: 'dashboard' });
+        async createNewSubTask(id) {
+            const data = {
+                stitle: this.stitle,
+                sdescription: this.sdescription,
+                task_id: id,
             }
+            console.log(data)
+            axios.post('http://localhost:8000/api/subtask/register', data)
+                .then(function (response) {
+                    console.log(response);
+                    window.location = window.location + '#loaded';
+                    window.location.reload();
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
         },
+    },
 
+    async mounted() {
+        {
+            const result = await axios.get(`http://localhost:8000/api/subtask/` + this.$route.params.id)
+            this.stitle = result.data.stitle
+            this.sdescription = result.data.sdescription
 
+        }
+        {
+            axios
+                .get('http://127.0.0.1:8000/api/task')
+                .then((response) => {
+                    this.tasks = response.data
+                    this.moment = moment;
+                })
+        }
+        {
+            axios
+                .get('http://localhost:8000/api/subtask')
+                .then((response) => {
+                    this.subtasks = response.data
+                    this.moment = moment;
+                })
+        }
+        {
+            const result = await axios.get(`http://localhost:8000/api/task/` + this.$route.params.id)
+            this.title = result.data.title
+            this.description = result.data.description
+            this.date = result.data.finishdate
+        }
     },
 }
 
@@ -282,7 +602,7 @@ export default {
 }
 
 .task-field {
-    width: 427px;
+    width: 475px;
     margin-left: 20px;
 }
 
@@ -305,7 +625,6 @@ export default {
 }
 
 .menu-subtasks button {
-    padding-left: 30px;
     border: none;
     background-color: transparent;
     display: none;
@@ -320,7 +639,12 @@ export default {
     align-items: center;
 }
 
-.description {
+.subtask-text-view {
+    margin-left: 20px;
+    width: 335px;
+}
+
+.subtask-description {
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -353,12 +677,21 @@ export default {
     margin-right: 10px;
 }
 
+.description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
 .date-counter {
     display: flex;
     flex-direction: row;
 }
 
-.date img {
+.date-view img {
     width: 13px;
     height: 14.44px;
     margin-right: 10px;
@@ -373,19 +706,460 @@ export default {
 
 .menu-tasks {
     display: flex;
-    padding-left: 36px;
     align-items: center;
 }
 
 .menu-tasks button {
     border: none;
-    padding-left: 30px;
     display: none;
     background-color: transparent;
     cursor: pointer;
 }
 
-.main-subtask-content:hover{
+.task:hover .menu-tasks button {
+    display: block;
+}
+
+/*MODAL VIEW TASK*/
+
+#main-container {
+    width: 819px;
+    min-height: 613px;
+    background-color: #fff;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: solid 1px #d9d9d9;
+    align-items: center;
+}
+
+.date-view {
+    padding: 4px 8px;
+    width: 110px;
+    background-color: #e5f4f3;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    text-align: left;
+    color: #009488
+}
+
+.buttons-nav-right {
+    align-items: center;
+}
+
+.main-dropdown {
+    list-style: none;
+}
+
+.dropdown-hover {
+    position: absolute;
+    display: none;
+    margin-top: 25px;
+}
+
+.dropdown {
+    list-style: none;
+    padding: 30px;
+    width: 246px;
+    height: 232px;
+    position: relative;
+    background-color: #fff;
+}
+
+form:hover .dropdown-hover {
+    display: block;
+}
+
+.black-li {
+    justify-items: center;
+    text-decoration: none;
+    margin-bottom: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.black-li img {
+    margin-right: 20px;
+    width: 17px;
+    height: 17px;
+}
+
+.red-li {
+    text-decoration: none;
+    color: #d31408;
+    margin-bottom: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.red-li img {
+    margin-right: 20px;
+    width: 17px;
+    height: 17px;
+}
+
+.x {
+    margin-left: 35px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-content {
+    width: 573px;
+}
+
+.task-view {
+    width: 513px;
+    box-sizing: border-box;
+    padding: 30px 30px 0px 30px;
+    display: flex;
+    flex-direction: row;
+    transition: .5;
+}
+
+.sub-checkbox-task {
+    all: unset;
+    border: 2px solid #e5e5e5;
+    border-radius: 100%;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.sub-checkbox-task:checked {
+    background-color: #000;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #000;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.task-field-view {
+    width: 447px;
+    padding-left: 20px;
+}
+
+.title-view {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: normal;
+    color: #000;
+    max-width: 470px;
+}
+
+.description-view {
+    margin-left: 20px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    color: #81858e;
+    max-width: 470px;
+}
+
+.h3-sub-task {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    letter-spacing: 0em;
+    border-bottom: solid 1px #e5e5e5;
+    color: #000;
+    margin-left: 70px;
+    margin-top: 38px;
+    width: 470px;
+    padding-bottom: 15px;
+}
+
+.sub-task-content-view {
+    box-sizing: border-box;
+    border-top: none;
+    margin: 10px 0px;
+}
+
+.sub-task-view {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    padding: 10px 0;
+    margin-left: 70px;
+    width: 470px;
+}
+
+.sub-task-item {
+    display: flex;
+    flex-direction: row;
+}
+
+.menu-tasks-view {
+    display: flex;
+    align-items: center;
+    display: none;
+    margin: auto 0;
+}
+
+.item-menu-task2 {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.menu-tasks-view button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.sub-task-item:hover .menu-tasks-view {
+    display: block;
+}
+
+.right-content {
+    box-sizing: border-box;
+    background-color: #f7f7f7;
+    padding: 30px;
+    width: 246px;
+    min-height: 531px;
+}
+
+.title-right {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    text-align: left;
+    margin-bottom: 10px;
+    color: #81858e;
+}
+
+.info-black {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: left;
+    margin-bottom: 40px;
+    color: #000;
+}
+
+.info-green {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: left;
+    margin-bottom: 40px;
+    color: #009488;
+}
+
+.info-black img,
+.info-green img {
+    margin-right: 10px;
+}
+
+/* MODAL UPDATE TASK */
+
+.btn,
+.btn-black {
+    border: none;
+    color: #81858e;
+    font-size: 15px;
+    padding: 0;
+}
+
+#form {
+    width: 678px;
+    height: 216px;
+    background-color: #fff;
+}
+
+#form-date {
+    width: 678px;
+    height: 216px;
+    padding-top: 93px;
+    background-color: #fff;
+}
+
+
+.button-date {
+    margin-left: 25px;
+    width: 200px;
+    height: 40px;
+    box-sizing: border-box;
+    border: solid 1px #e5e5e5;
+    background-color: #fff;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+#task-name {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-top: 21px;
+    margin-left: 25px;
+    border: none;
+}
+
+#task-description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    margin-top: 15px;
+    margin-left: 25px;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.button-date {
+    margin-left: 25px;
+    width: 199px;
+    height: 40px;
+    box-sizing: border-box;
+    border: solid 1px #e5e5e5;
+    background-color: #fff;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.button-date img {
+    height: 14px;
+    width: 14px;
+    margin: 13px 14px 10px 13px;
+}
+
+.date {
+    border: none;
+    font-size: 14px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 55px;
+    border-top: solid 1px #e5e5e5;
+    padding: 14px 25px;
+}
+
+.buttons-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 15px;
+    border-top: solid 1px #e5e5e5;
+    padding: 14px 25px;
+}
+
+.buttons-bottom-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.white-button {
+    width: 122px;
+    height: 40px;
+    border: none;
+    background-color: #f7f7f7;
+    color: #000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 17.07px;
+    cursor: pointer;
+    text-align: center;
+    padding: 12px 0;
+    margin-left: 380px;
+}
+
+.black-button {
+    width: 122px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 17.07px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.white-button-new-subtask {
+    width: 122px;
+    height: 40px;
+    border: none;
+    background-color: #f7f7f7;
+    color: #000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 17.07px;
+    cursor: pointer;
+    text-align: center;
+    padding: 12px 0;
+    margin-left: 352px;
+}
+
+.black-button-new-subtask {
+    width: 150px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 17.07px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.trash-button {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.button-icon-date {
+    padding: 0 30px;
+}
+
+.btn,
+.btn-secondary {
+    background-color: transparent;
+}
+
+.btn:hover,
+.btn-secondary:hover {
+    background-color: transparent;
+}
+
+/* MODAL SUB TASK */
+
+.modal-content {
+    background-color: transparent;
+}
+
+.main-subtask-content:hover {
     background-color: #fafafa;
 }
 
@@ -411,7 +1185,7 @@ export default {
 }
 
 .add-task {
-    padding: 15px 25px;
+    padding: 15px 5px;
     box-sizing: border-box;
     border: solid 1px #e5e5e5;
     color: #81858e;
@@ -426,10 +1200,6 @@ export default {
 
 .task:hover {
     background-color: #fafafa;
-}
-
-.task:hover .menu-tasks button {
-    display: block;
 }
 
 .subtask-text {
@@ -450,4 +1220,11 @@ export default {
 
 .subtask-text img {
     margin-right: 10px;
-}</style>
+}
+
+.btn:hover,
+.btn-secondary:hover {
+    background-color: transparent;
+    color: #81858E;
+}
+</style>

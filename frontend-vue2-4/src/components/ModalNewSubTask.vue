@@ -24,6 +24,8 @@
   </div>
 </template>
 
+</template>
+
 <script>
 import axios from 'axios'
 
@@ -64,15 +66,12 @@ export default {
       axios.post('http://localhost:8000/api/subtask/register', data)
         .then(function (response) {
           console.log(response);
-          window.location = window.location + '#loaded';
-          window.location.reload();
+       
         })
         .catch(function (error) {
           console.error(error);
         });
-      if (result.status == 200) {
-        this.$router.push({ name: 'dashboard' });
-      }
+     
     },
   }
 }

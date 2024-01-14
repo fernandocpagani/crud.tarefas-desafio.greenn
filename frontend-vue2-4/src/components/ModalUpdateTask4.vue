@@ -1,10 +1,9 @@
 <template>
   <div>
-    
-    <b-button v-b-modal="'myModal' + id"><img src="../../public/lapis.svg" alt="lapis"></b-button>
+    <b-button v-b-modal.modal-sm variant="dark">Criar tarefa</b-button>
 
-    <b-modal :id="'myModal' + task.id">
-    <form id="form">
+<b-modal id="modal-sm" size="lg" title="Large Modal"  body-class="p-0" centered hide-header hide-footer >
+      <form id="form">
 
 <div>
     <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
@@ -24,15 +23,15 @@
 </div>
 
 </form>
-  </b-modal>
-</div>
+    </b-modal>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
-    name: "ModalUpdateTask",
+    name: "UpdateTask",
 
     data() {
         return {
@@ -68,7 +67,6 @@ export default {
 
 }
 </script> 
-
 
 <style scoped>
 

@@ -13,15 +13,12 @@
 <script>
 
 export default {
-    name: "Menu",
-    
+    name: "Menu",    
   
     async mounted() { 
 
         let user = localStorage.getItem('user-info');
     this.name= JSON.parse(user).user.name[0].toUpperCase();
-    console.log(this.name)
-
 }
 }
 

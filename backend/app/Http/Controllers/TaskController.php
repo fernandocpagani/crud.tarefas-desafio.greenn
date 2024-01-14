@@ -34,8 +34,8 @@ class TaskController extends Controller
         $task->title = $request->title;      
         $task->description = $request->description;        
         $task->finishdate = $request->finishdate;        
-        // $task->status = $request->status;        
         $task->users_id = $request->users_id;     
+        // $task->status = $request->status;        
 
         $task->save();
         return response()->json($task);
@@ -49,7 +49,16 @@ class TaskController extends Controller
         $task = Task::find($id);
         $task->title = $request->title;        
         $task->description = $request->description;        
-        $task->status = $request->status;        
+        // $task->status = $request->status;  
+                            
+        $task->save();
+
+        return response()->json($task);
+    }
+
+    public function updateTaskStatus($id, Request $request){
+        $task = Task::find($id);             
+        $task->status = $request->status;  
                             
         $task->save();
 
