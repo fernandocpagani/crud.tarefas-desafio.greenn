@@ -1,17 +1,19 @@
 <template>
   <div id="main-container">
 
-    <nav>
+    <nav class="view-task-nav">
 
-      <div v-if="1 == 1">
+      <div v-if="finishdate >= nowTime()">
         <div class="date-view-green">
-          <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
+          <img src="../../public/dataverde.svg" alt="dataverde"> <Label>No
+            prazo</Label>
         </div>
       </div>
 
       <div v-else>
         <div class="date-view-red">
-          <img src="../../public/datavermelho.svg" alt=""> <Label>Vencido</Label>
+          <img src="../../public/datavermelho.svg" alt="datavermelha">
+          <Label>Vencido</Label>
         </div>
       </div>
 
@@ -26,7 +28,8 @@
                       alt="copiar link">Copiar link da tarefa
                   </li>
 
-                  <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa</li>
+                  <li class="black-li" @click="duplicateTask(id)"><img src="../../public/duplicar.svg"
+                      alt="duplicar tarefa">Duplicar tarefa</li>
 
                   <li class="black-li" @click="printTask(id)"><img src="../../public/imprimir.svg" alt="imprimir">Imprimir
                     tarefa</li>
@@ -53,7 +56,14 @@
         <div class="task">
 
           <div>
-            <input type="checkbox" id="checkbox-task">
+            <button class="checkbutton" @click="checkTask(id)">
+              <div v-if="status == 'pending'">
+                <img src="../../public/checkvazio.svg" alt="check">
+              </div>
+              <div v-else>
+                <img src="../../public/checkcheio.svg" alt="check">
+              </div>
+            </button>
           </div>
 
           <div class="task-field">
@@ -70,7 +80,14 @@
           <div class="sub-task" v-if="subtask.task_id == id">
 
             <div>
-              <input type="checkbox" id="sub-checkbox-task">
+              <button class="checkbutton" @click="checkSubtask(subtask.id)">
+                <div v-if="subtask.sstatus == 'pending'">
+                  <img src="../../public/checkvazio.svg" alt="check">
+                </div>
+                <div v-else>
+                  <img src="../../public/checkcheio.svg" alt="check">
+                </div>
+              </button>
             </div>
 
             <div class="sub-task-item">
@@ -100,6 +117,7 @@
         <h4 class="title-right">Criado em</h4>
         <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{
           moment(created_at).format('DD/MM/YYYY') }} às {{ moment(created_at).format('HH:mm') }}
+
         </h5>
 
         <h4 class="title-right">Data de vencimento</h4>
@@ -114,6 +132,11 @@
             moment(finishdate).format('DD/MM/YYYY') }}
           </h5>
         </div>
+
+        <h4 class="title-right">Modificado em</h4>
+        <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">
+          {{ moment(updated_at).format('DD/MM/YYYY') }} às {{
+            moment(updated_at).format('HH:mm') }} </h5>
 
         <h4 class="title-right">ID da tarefa</h4>
         <h5 class="info-black">{{ id }}</h5>
@@ -159,7 +182,6 @@ export default {
     this.created_at = result.data.created_at
     this.updated_at = result.data.updated_at
     this.status = result.data.status
-    this.status = result.data.status
     this.moment = moment;
 
     {
@@ -176,7 +198,97 @@ export default {
       }, 1000);
     }
   },
+
   methods: {
+
+    nowTime() {
+      return moment().format('DD/MM/YYYY')
+    },
+
+    async duplicateTask(id) {
+
+      const user = JSON.parse(localStorage.getItem("user-info"))
+
+      const data = {
+        title: this.title,
+        description: this.description,
+        finishdate: this.finishdate,
+        status: this.status,
+        users_id: user.user.id,
+      }
+
+      const result = axios.post('http://localhost:8000/api/task/register', data)
+        .then(function (response) {
+          const taskid = response.data.id
+
+          const resultsub = axios.get(`http://localhost:8000/api/subtask/taskid/${id}`)
+            .then(function (responsesub) {
+              console.log(responsesub.data[1]);
+
+              for (let i = 0; i < responsesub.data.length; i++) {
+
+                const datasub = {
+                  stitle: responsesub.data[i].stitle,
+                  sdescription: responsesub.data[i].sdescription,
+                  task_id: taskid,
+                }
+
+                const resultsubsend = axios.post('http://localhost:8000/api/subtask/register', datasub)
+                  .then(function (response) {
+                    console.log(response);
+                  })
+
+              }
+            })
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+          
+          this.$router.push({ name: "dashboard" })
+    },
+
+    async checkTask(id) {
+      const result = await axios.get(`http://localhost:8000/api/task/${id}`)
+      if (result.data.status == "pending") {
+        const result = await axios.put(`http://localhost:8000/api/task/${id}/updatetaskstatus`,
+          {
+            status: "completed"
+
+          })
+      } else {
+        const result = await axios.put(`http://localhost:8000/api/task/${id}/updatetaskstatus`,
+          {
+            status: "pending"
+          })
+      }
+      console.log(result)
+      if (result.status == 200) {
+        window.location = window.location;
+        window.location.reload();
+      }
+    },
+
+    async checkSubtask(id) {
+      const result = await axios.get(`http://localhost:8000/api/subtask/${id}`)
+      if (result.data.sstatus == "pending") {
+        const result = await axios.put(`http://localhost:8000/api/subtask/${id}/updatesubtaskstatus`,
+          {
+            sstatus: "completed"
+
+          })
+      } else {
+        const result = await axios.put(`http://localhost:8000/api/subtask/${id}/updatesubtaskstatus`,
+          {
+            sstatus: "pending"
+          })
+      }
+      if (result.status == 200) {
+        window.location = window.location;
+        window.location.reload();
+      }
+    },
+
 
     async printTask(id) {
       setTimeout(() => {
@@ -199,7 +311,7 @@ export default {
     async deleteSubTask(id) {
       axios.delete(`http://localhost:8000/api/subtask/${id}/delete`)
         .then(() => {
-          window.location = window.location + '#loaded';
+          window.location = window.location;
           window.location.reload();
         })
     },
@@ -252,6 +364,42 @@ nav {
   text-align: left;
   color: #009488
 }
+
+
+.date-view-green {
+  padding: 4px 8px;
+  width: 110px;
+  background-color: #e5f4f3;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  text-align: left;
+  color: #009488
+}
+
+.date-view-green img {
+  width: 13px;
+  height: 14.44px;
+  margin-right: 10px;
+}
+
+.date-view-red {
+  padding: 4px 8px;
+  width: 110px;
+  background-color: #d314081a;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  text-align: left;
+  color: #d31408;
+}
+
+.date-view-red img {
+  width: 13px;
+  height: 14.44px;
+  margin-right: 10px;
+}
+
 
 .buttons-nav-right {
   align-items: center;
@@ -338,6 +486,11 @@ form:hover .dropdown-hover {
   display: flex;
   flex-direction: row;
   transition: .5;
+}
+
+.checkbutton {
+  border: none;
+  background-color: transparent;
 }
 
 input {
@@ -495,27 +648,27 @@ input:checked {
 }
 
 .info-green {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 17px;
-    text-align: left;
-    margin-bottom: 40px;
-    color: #009488;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: left;
+  margin-bottom: 40px;
+  color: #009488;
 }
 
 .info-red {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 17px;
-    text-align: left;
-    margin-bottom: 40px;
-    color: #d31408;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  text-align: left;
+  margin-bottom: 40px;
+  color: #d31408;
 }
 
 .info-black img,
 .info-green img,
 .info-red img {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .form-group input,

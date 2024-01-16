@@ -41,7 +41,14 @@
 
                         </div>
 
-                        <Message :msg="msg" v-show="msg" />
+                        <!-- <Message :msg="msg" v-show="msg" /> -->
+
+                        <div>
+        <div class="message-container">
+            <p :msg="msg" v-show="msg">{{ msg  }} </p>
+        </div>
+    </div>
+
 
                     </form>
 
@@ -79,12 +86,15 @@
 
 <script>
 import axios from 'axios'
-import Message from '../components/Message.vue'
+
 
 export default {
     name: "CreateUser",
     components: {
-        Message
+      
+    },
+    props: {
+        msg: String
     },
 
     data() {
@@ -92,7 +102,7 @@ export default {
             email: null,
             name: null,
             password: null,
-            msg: "",
+            msg: null,
         }
     },
 
@@ -109,67 +119,35 @@ export default {
 
 
             axios.post('http://localhost:8000/api/auth/register', data)
-                .then(function (response) {
-                    console.log(response.status);
-                    if (response.status == 200) {
-                        this.msg = `Não foi possível cadastrar`
-                    } else {
-                        console.log("deu errado")
-                    }
+          .then(function (response) {
+            console.log(response);
+            return response
+           
 
-                })
-                .catch(function (error) {
+          })
+          .catch(function (error) {
+            console.error(error); 
+          
+        //    this.msg = `Não foi possível cadastrar`
+                  
+          });
 
-                    this.msg = `Não foi possível cadastrar`
-                    setTimeout(() => this.msg = "", 3000);
-                });
+        
+        console.log()
 
-            // this.msg = "Usuário cadastrado com sucesso!"
-            // setTimeout(() => this.msg = "", 3000);
-
-            this.email = "";
-            this.name = "";
-            this.password = "";
-            this.confirmpassword = "";
-
-
-
-
-
-
-
-
-            // const user = axios.post('http://127.0.0.1:8000/api/auth/register', data)
-            //     .then(function (response) {
-            //         console.log(response.status);
-            //         // if(response.status === 200){
-            //         //     console.log("deu certo")                      
-            //             return this.msg = `Usuario cadastr`
-
-            //     })
-            //     .catch(function (error) {
-            //         console.error(error);
-            //     });
-
-            //     this.msg = `Não foi possível cadastrar`
-
-            //     if(data.status == 200){
-            //         this.$router.push({ name: "login" })
+        if (data.email == null || data.name == null || data.password == null ) {
+            this.msg = `Não foi possível cadastrar` 
+            setTimeout(() => this.msg = "", 3000);
+        } else {
+            this.msg = "Usuário cadastrado com sucesso!"
+            setTimeout(() => this.msg = "", 3000);
         }
-        //   if (data.status == "success") {
-        //     console.log("deu certo")
-        //   }else{
-        //      this.msg = `Não foi possível cadastrar`
-        //  setTimeout(() => this.msg = "", 3000);
-        //   }
 
-
-
-        // this.email = "";
-        // this.name = "";
-        // this.password = "";
-
-    }
+        this.email = "";
+        this.name = "";
+        this.password = "";      
+      }
+    }    
 }
 
 </script>
@@ -347,6 +325,15 @@ footer img {
     margin-bottom: 8px;
     cursor: pointer;
 }
+
+.message-container {
+        padding: 5px 10px 0px 10px;
+        background-color: transparent;     
+        color: red;
+        align-items: center;
+        justify-content: center;
+        text-align: center;        
+    }
 
 @media(max-width: 490px) {
 

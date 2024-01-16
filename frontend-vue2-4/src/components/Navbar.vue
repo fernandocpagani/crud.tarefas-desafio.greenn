@@ -11,6 +11,7 @@
                 <img class="nav-button2" src="../../public/interrogacao.svg" alt="interrogacao">
                 <img class="nav-button" src="../../public/sino.svg" alt="sino">
                 <label class="first-letter">{{ name }}</label>
+                <a v-on:click="logout" href="/" class="out-button">Sair</a>
             </div>
         </div>
     </nav>
@@ -29,6 +30,13 @@ export default {
         return {
             name: null,
 
+        }
+    },
+
+    methods: {
+        logout() {
+            localStorage.clear();
+            this.$router.push({ name: "login" })
         }
     },
 
@@ -104,6 +112,17 @@ nav {
     font-weight: bold;
     border-radius: 100%;
     font-size: 20px;
+}
+
+.out-button{    
+font-size: 15px;
+font-weight: 600;
+line-height: 18px;
+letter-spacing: 0em;
+text-align: left;
+margin: 0 22.5px;
+color: #fff;
+text-decoration: none;
 }
 
 .nav-button2 {

@@ -476,7 +476,7 @@ export default {
                     })
             }
             if (result.status == 200) {
-                window.location = window.location + '#loaded';
+                window.location = window.location;
                 window.location.reload();
             }
         },
@@ -488,7 +488,7 @@ export default {
                     finishdate: this.finishdate,
                 });
             if (result.status == 200) {
-                window.location = window.location + '#loaded';
+                window.location = window.location ;
                 window.location.reload();
             }
         },
@@ -500,7 +500,7 @@ export default {
                     sdescription: this.sdescription,
                 });
             if (result.status == 200) {
-                window.location = window.location + '#loaded';
+                window.location = window.location ;
                 window.location.reload();
             }
         },

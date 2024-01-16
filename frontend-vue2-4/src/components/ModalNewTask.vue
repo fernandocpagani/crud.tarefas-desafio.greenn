@@ -7,12 +7,12 @@
       <form id="form">
 
         <div>
-          <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
+          <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" 
             v-model="title">
         </div>
 
         <div>
-          <input type="name" id="task-description" name="task-description" maxlength="50" placeholder="Descrição" required
+          <input type="name" id="task-description" name="task-description" maxlength="50" placeholder="Descrição" 
             v-model="description">
         </div>
 
@@ -23,7 +23,7 @@
         </div>
 
         <div class="buttons">
-          <a href="/dashboard" class="white-button">Cancelar</a>
+          <button class="white-button" @click="close()">Cancelar</button>
           <div class="button" @click="createTask()">
             <input type="button" class="black-button" value="Criar tarefa">
           </div>
@@ -76,7 +76,7 @@ export default {
       axios.post('http://localhost:8000/api/task/register', data)
         .then(function (response) {
           console.log(response);
-          window.location = window.location + '#loaded';
+          window.location = window.location;
           window.location.reload();
         })
         .catch(function (error) {

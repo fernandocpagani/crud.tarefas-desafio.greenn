@@ -19,7 +19,6 @@
                             </div>
 
                             <div>
-
                                 <button class="checkbutton" @click="checkTask(task.id)">
                                     <div v-if="task.status == 'pending'">
                                         <img src="../../public/checkvazio.svg" alt="check">
@@ -46,7 +45,7 @@
 
                                         <div id="main-container">
 
-                                            <nav>
+                                            <nav class="view-task-nav">
 
                                                 <div v-if="task.finishdate >= moment().format('YYYY-MM-DD')">
                                                     <div class="date-view-green">
@@ -73,12 +72,13 @@
                                                                                 src="../../public/copiarlink.svg"
                                                                                 alt="copiar link"> Copiar link da tarefa
                                                                         </li>
-                                                                        <li class="black-li"><img
+                                                                        <li class="black-li" @click="duplicateTask(task.id)"><img
                                                                                 src="../../public/duplicar.svg"
                                                                                 alt="duplicar tarefa">Duplicar tarefa</li>
                                                                         <li class="black-li" @click="printTask(task.id)">
                                                                             <img src="../../public/imprimir.svg"
-                                                                                alt="imprimir">Imprimir tarefa</li>
+                                                                                alt="imprimir">Imprimir tarefa
+                                                                        </li>
                                                                         <li class="red-li" @click="deleteTask(id)"><img
                                                                                 src="../../public/lixeiravermelha.svg"
                                                                                 alt="excluir">Excluir tarefa</li>
@@ -87,11 +87,14 @@
                                                             </ul>
                                                         </div>
 
+                                                        <div class="buttons-nav-view">
+                                                            <button class="x"> <img src="../../public/3pontos.svg"
+                                                                    alt="3pontos"></button>
 
-                                                        <button class="x"> <img src="../../public/3pontos.svg"
-                                                                alt="3pontos"></button>
+                                                            <button class="x" @click="close()"><img src="../../public/x.svg"
+                                                                    alt="x"></button>
+                                                        </div>
 
-                                                        <button class="x"><img src="../../public/x.svg" alt="x"></button>
                                                     </form>
                                                 </div>
                                             </nav>
@@ -103,7 +106,14 @@
                                                     <div class="task-view">
 
                                                         <div>
-                                                            <input type="checkbox" class="sub-checkbox-task">
+                                                            <button class="checkbutton" @click="checkTask(task.id)">
+                                                                <div v-if="task.status == 'pending'">
+                                                                    <img src="../../public/checkvazio.svg" alt="check">
+                                                                </div>
+                                                                <div v-else>
+                                                                    <img src="../../public/checkcheio.svg" alt="check">
+                                                                </div>
+                                                            </button>
                                                         </div>
 
                                                         <div class="task-field-view">
@@ -121,7 +131,15 @@
                                                         <div class="sub-task-view" v-if="subtask.task_id == task.id">
 
                                                             <div>
-                                                                <input type="checkbox" class="sub-checkbox-task">
+                                                                <button class="checkbutton"
+                                                                    @click="checkSubtask(subtask.id)">
+                                                                    <div v-if="subtask.sstatus == 'pending'">
+                                                                        <img src="../../public/checkvazio.svg" alt="check">
+                                                                    </div>
+                                                                    <div v-else>
+                                                                        <img src="../../public/checkcheio.svg" alt="check">
+                                                                    </div>
+                                                                </button>
                                                             </div>
 
                                                             <div class="sub-task-item">
@@ -243,17 +261,16 @@
 
                                             <div>
                                                 <input type="name" id="task-name" name="task-name"
-                                                    placeholder="Nome da tarefa" maxlength="30" required v-model="title">
+                                                    placeholder="Nome da tarefa" maxlength="30" v-model="title">
                                             </div>
 
                                             <div>
                                                 <input type="name" id="task-description" name="task-description"
-                                                    maxlength="50" placeholder="Descrição" required v-model="description">
+                                                    maxlength="50" placeholder="Descrição" v-model="description">
                                             </div>
 
                                             <div class="buttons">
-                                                <router-link :to="'/dashboard'"><button
-                                                        class="white-button">Cancelar</button></router-link>
+                                                <button class="white-button" @click="close()">Cancelar</button>
                                                 <div class="button" @click="updateTask(task.id)">
                                                     <input type="button" class="black-button" value="Atualizar tarefa">
                                                 </div>
@@ -342,39 +359,40 @@
 
                                         <!-- MODAL UPDATE SUBTASK -->
 
-                                        <b-button v-b-modal.modal-sm="'modalupdatesubtask' + subtask.id" variant="black"
-                                            body-class="p-0"><img src="../../public/lapis.svg" alt="lapis"
-                                                class="button-icon-date"></b-button>
+                                        <div>
 
-                                        <b-modal :id="'modalupdatesubtask' + subtask.id" size="sm" title="Small Modal"
-                                            body-class="p-0" hide-header hide-footer centered>
+                                            <b-button v-b-modal.modal-sm="'modalupdatesubtask' + subtask.id" variant="black"
+                                                body-class="p-0"><img src="../../public/lapis.svg" alt="lapis"
+                                                    class="button-icon-date"></b-button>
 
-                                            <form id="form">
+                                            <b-modal :id="'modalupdatesubtask' + subtask.id" size="sm" title="Small Modal"
+                                                body-class="p-0" hide-header hide-footer centered>
 
-                                                <div>
-                                                    <input type="name" id="task-name" name="task-name"
-                                                        placeholder="Nome da tarefa" maxlength="35" required
-                                                        v-model="stitle">
-                                                </div>
+                                                <form id="form">
 
-                                                <div>
-                                                    <input type="name" id="task-description" name="task-description"
-                                                        maxlength="50" placeholder="Descrição" required
-                                                        v-model="sdescription">
-                                                </div>
-
-                                                <div class="buttons">
-                                                    <router-link :to="'/dashboard'"><button
-                                                            class="white-button-new-subtask">Cancelar</button></router-link>
-                                                    <div class="button" @click="updateSubTask(subtask.id)">
-                                                        <input type="button" class="black-button-new-subtask"
-                                                            value="Atualizar subtarefa">
+                                                    <div>
+                                                        <input type="name" id="task-name" name="task-name"
+                                                            placeholder="Nome da tarefa" maxlength="35" v-model="stitle">
                                                     </div>
-                                                </div>
 
-                                            </form>
+                                                    <div>
+                                                        <input type="name" id="task-description" name="task-description"
+                                                            maxlength="50" placeholder="Descrição" v-model="sdescription">
+                                                    </div>
 
-                                        </b-modal>
+                                                    <div class="buttons">
+                                                        <button class="white-button" @click="close()">Cancelar</button>
+                                                        <div class="button" @click="updateSubTask(subtask.id)">
+                                                            <input type="button" class="black-button-new-subtask"
+                                                                value="Atualizar subtarefa">
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+
+                                            </b-modal>
+
+                                        </div>
 
                                         <button> <img src="../../public/lixeiracinza.svg" alt="excluir"
                                                 @click="deleteSubTask(subtask.id)"></button>
@@ -414,8 +432,7 @@
                                     </div>
 
                                     <div class="buttons">
-                                        <router-link :to="'/dashboard'"><button
-                                                class="white-button">Cancelar</button></router-link>
+                                        <button class="white-button" @click="close()">Cancelar</button>
                                         <div class="button" @click="createNewSubTask(task.id)">
                                             <input type="button" class="black-button" value="Criar subtarefa">
                                         </div>
@@ -460,6 +477,56 @@ export default {
 
     methods: {
 
+        async duplicateTask(id) {
+
+            const user = JSON.parse(localStorage.getItem("user-info"))
+
+            const resulttask = axios.get(`http://localhost:8000/api/task/${id}`)
+            .then(function (resulttask) {
+            
+            const data = {
+                title: resulttask.data.title,
+                description: resulttask.data.description,
+                finishdate: resulttask.data.finishdate,               
+                users_id: user.user.id,
+            }
+           
+            
+            const result = axios.post('http://localhost:8000/api/task/register', data)
+            .then(function (response) {
+                const taskid = response.data.id
+                
+                const resultsub = axios.get(`http://localhost:8000/api/subtask/taskid/${id}`)
+                .then(function (responsesub) {
+                
+                    
+                    for (let i = 0; i < responsesub.data.length; i++) {
+                        
+                                const datasub = {
+                                    stitle: responsesub.data[i].stitle,
+                                    sdescription: responsesub.data[i].sdescription,
+                                    task_id: taskid,
+                                }
+                                
+                                console.log(datasub)
+                                
+                                const resultsubsend = axios.post('http://localhost:8000/api/subtask/register', datasub)
+                                .then(function (response) {
+                                    console.log(response);
+                                })
+                                
+                            }
+                        })
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+                })
+
+        //         window.location = window.location;
+        // window.location.reload();
+        },
+
         userId() {
             let userId = JSON.parse(localStorage.getItem('user-info')).user.id;
             return userId
@@ -493,7 +560,7 @@ export default {
             }
             console.log(result)
             if (result.status == 200) {
-                window.location = window.location + '#loaded';
+                window.location = window.location;
                 window.location.reload();
             }
         },
@@ -513,7 +580,7 @@ export default {
                     })
             }
             if (result.status == 200) {
-                window.location = window.location + '#loaded';
+                window.location = window.location;
                 window.location.reload();
             }
         },
@@ -525,7 +592,7 @@ export default {
                     finishdate: this.finishdate,
                 });
             if (result.status == 200) {
-                window.location = window.location + '#loaded';
+                window.location = window.location;
                 window.location.reload();
             }
         },
@@ -537,7 +604,7 @@ export default {
                     sdescription: this.sdescription,
                 });
             if (result.status == 200) {
-                window.location = window.location + '#loaded';
+                window.location = window.location;
                 window.location.reload();
             }
         },
@@ -549,7 +616,7 @@ export default {
                     description: this.description,
                 });
             if (result.status == 200) {
-                window.location = window.location + '#loaded';
+                window.location = window.location;
                 window.location.reload();
             }
         },
@@ -557,7 +624,7 @@ export default {
         async deleteTask(id) {
             axios.delete(`http://localhost:8000/api/task/${id}/delete`)
                 .then(() => {
-                    window.location = window.location + '#loaded';
+                    window.location = window.location;
                     window.location.reload();
                 })
         },
@@ -565,7 +632,7 @@ export default {
         async deleteSubTask(id) {
             axios.delete(`http://localhost:8000/api/subtask/${id}/delete`)
                 .then(() => {
-                    window.location = window.location + '#loaded';
+                    window.location = window.location;
                     window.location.reload();
                 })
         },
@@ -580,7 +647,7 @@ export default {
             axios.post('http://localhost:8000/api/subtask/register', data)
                 .then(function (response) {
                     console.log(response);
-                    window.location = window.location + '#loaded';
+                    window.location = window.location;
                     window.location.reload();
                 })
                 .catch(function (error) {
@@ -766,6 +833,10 @@ export default {
     flex-direction: row;
 }
 
+.view-task-nav {
+    padding: 7px 30px;
+}
+
 .date-view-green {
     padding: 4px 8px;
     width: 110px;
@@ -905,6 +976,10 @@ form:hover .dropdown-hover {
     margin-right: 20px;
     width: 17px;
     height: 17px;
+}
+
+.buttons-nav-view {
+    margin-bottom: 12px;
 }
 
 .x {
@@ -1379,4 +1454,5 @@ form:hover .dropdown-hover {
     .task {
         max-width: 469px;
     }
-}</style>
+}
+</style>
