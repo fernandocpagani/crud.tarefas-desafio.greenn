@@ -3,10 +3,11 @@
 
         <div class="main-content">
 
-            <h3 class="title">Entrada</h3>
+            <h3 class="title">Tarefas de hoje</h3>
 
             <div v-for="task in tasks" :key="task.id">
-                <div v-if="task.users_id == userId()">
+
+                <div v-if="task.finishdate == moment().format('YYYY-MM-DD')">
 
                     <!-- TASKS -->
 
@@ -47,21 +48,9 @@
                                         <div id="main-container">
 
                                             <nav>
-
-                                                <div v-if="task.finishdate >= moment().format('YYYY-MM-DD')">
-                                                    <div class="date-view-green">
-                                                        <img src="../../public/dataverde.svg" alt="dataverde"> <Label>No
-                                                            prazo</Label>
-                                                    </div>
+                                                <div class="date-view">
+                                                    <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
                                                 </div>
-
-                                                <div v-else>
-                                                    <div class="date-view-red">
-                                                        <img src="../../public/datavermelho.svg" alt="datavermelha">
-                                                        <Label>Vencido</Label>
-                                                    </div>
-                                                </div>
-
                                                 <div class="buttons-nav-right">
                                                     <form>
 
@@ -69,15 +58,15 @@
                                                             <ul class="main-dropdown">
                                                                 <li class="dropdown-hover">
                                                                     <ul class="dropdown">
-                                                                        <li class="black-li" @click="copyTask(task.id)"><img
+                                                                        <li class="black-li"><img
                                                                                 src="../../public/copiarlink.svg"
-                                                                                alt="copiar link"> Copiar link da tarefa
+                                                                                alt="copiar link">Copiar link da tarefa
                                                                         </li>
                                                                         <li class="black-li"><img
                                                                                 src="../../public/duplicar.svg"
                                                                                 alt="duplicar tarefa">Duplicar tarefa</li>
-                                                                        <li class="black-li" @click="printTask(task.id)">
-                                                                            <img src="../../public/imprimir.svg"
+                                                                        <li class="black-li" @click="window.print()"><img
+                                                                                src="../../public/imprimir.svg"
                                                                                 alt="imprimir">Imprimir tarefa</li>
                                                                         <li class="red-li" @click="deleteTask(id)"><img
                                                                                 src="../../public/lixeiravermelha.svg"
@@ -165,20 +154,10 @@
                                                     </h5>
 
                                                     <h4 class="title-right">Data de vencimento</h4>
-
-                                                    <div v-if="task.finishdate >= moment().format('YYYY-MM-DD')">
-                                                        <h5 class="info-green"><img src="../../public/dataverde.svg"
-                                                                alt="calendario-verde">{{
-                                                                    moment(task.finishdate).format('DD/MM/YYYY') }}
-                                                        </h5>
-                                                    </div>
-
-                                                    <div v-else>
-                                                        <h5 class="info-red"><img src="../../public/datavermelho.svg"
-                                                                alt="calendario-vermelho">{{
-                                                                    moment(task.finishdate).format('DD/MM/YYYY') }}
-                                                        </h5>
-                                                    </div>
+                                                    <h5 class="info-green"><img src="../../public/dataverde.svg"
+                                                            alt="calendario-verde">{{
+                                                                moment(task.finishdate).format('DD/MM/YYYY') }}
+                                                    </h5>
 
                                                     <h4 class="title-right">Modificado em</h4>
                                                     <h5 class="info-black"><img src="../../public/datapreto.svg"
@@ -284,7 +263,8 @@
                                             </div>
 
                                             <div class="buttons-date">
-                                                <button class="white-button" @click="close()">Cancelar</button>
+                                                <router-link :to="'/dashboard'"><button
+                                                        class="white-button">Cancelar</button></router-link>
                                                 <div class="button" @click="updateDate(task.id)">
                                                     <input type="button" class="black-button" value="Atualizar data">
                                                 </div>
@@ -398,8 +378,8 @@
                                 body-class="p-0"><img src="../../public/adicionarcinza.svg" alt="adicionar">Criar
                                 subtarefa</b-button>
 
-                            <b-modal :id="'modalnewsubtask' + task.id" size="sm" style="width:400px" title="Small Modal"
-                                body-class="p-0" hide-header hide-footer centered>
+                            <b-modal :id="'modalnewsubtask' + task.id" size="sm" title="Small Modal" body-class="p-0"
+                                hide-header hide-footer centered>
 
                                 <form id="form">
 
@@ -430,6 +410,7 @@
                 </div>
 
             </div>
+
         </div>
 
     </div>
@@ -459,23 +440,6 @@ export default {
     },
 
     methods: {
-
-        userId() {
-            let userId = JSON.parse(localStorage.getItem('user-info')).user.id;
-            return userId
-        },
-
-
-        async printTask(id) {
-            console.log(id)
-            window.open(`http://localhost:8080/modalviewtask/${id}`)
-                .then(() => { window.print() });
-        },
-
-        async copyTask(id) {
-            console.log(id);
-            await navigator.clipboard.writeText(`http://localhost:8080/modalviewtask/${id}`);
-        },
 
         async checkTask(id) {
             const result = await axios.get(`http://localhost:8000/api/task/${id}`)
@@ -766,35 +730,7 @@ export default {
     flex-direction: row;
 }
 
-.date-view-green {
-    padding: 4px 8px;
-    width: 110px;
-    background-color: #e5f4f3;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 17px;
-    text-align: left;
-    color: #009488
-}
-
-.date-view-green img {
-    width: 13px;
-    height: 14.44px;
-    margin-right: 10px;
-}
-
-.date-view-red {
-    padding: 4px 8px;
-    width: 110px;
-    background-color: #d314081a;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 17px;
-    text-align: left;
-    color: #d31408;
-}
-
-.date-view-red img {
+.date-view img {
     width: 13px;
     height: 14.44px;
     margin-right: 10px;
@@ -829,10 +765,6 @@ export default {
     width: 819px;
     min-height: 613px;
     background-color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 nav {
@@ -844,6 +776,16 @@ nav {
     align-items: center;
 }
 
+.date-view {
+    padding: 4px 8px;
+    width: 110px;
+    background-color: #e5f4f3;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    text-align: left;
+    color: #009488
+}
 
 .buttons-nav-right {
     align-items: center;
@@ -857,12 +799,11 @@ nav {
     position: absolute;
     display: none;
     margin-top: 25px;
-    right: 0px;
 }
 
 .dropdown {
     list-style: none;
-    padding: 29px;
+    padding: 30px;
     width: 246px;
     height: 232px;
     position: relative;
@@ -1066,18 +1007,8 @@ form:hover .dropdown-hover {
     color: #009488;
 }
 
-.info-red {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 17px;
-    text-align: left;
-    margin-bottom: 40px;
-    color: #d31408;
-}
-
 .info-black img,
-.info-green img,
-.info-red img {
+.info-green img {
     margin-right: 10px;
 }
 
@@ -1095,10 +1026,6 @@ form:hover .dropdown-hover {
     width: 678px;
     height: 216px;
     background-color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 #form-date {
@@ -1106,10 +1033,6 @@ form:hover .dropdown-hover {
     height: 216px;
     padding-top: 93px;
     background-color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 
@@ -1342,41 +1265,4 @@ form:hover .dropdown-hover {
 .btn-secondary:hover {
     background-color: transparent;
     color: #81858E;
-}
-
-@media(max-width: 490px) {
-
-    .modal-sm="'modalnewsubtask' + task.id" {
-        max-width: auto !important;
-        width: 400px
-    }
-
-    /deep/ #modalnewsubtask {
-        width: 479px;
-        border-radius: 0;
-    }
-
-    /deep/ #modalupdatetaskdate {
-        width: 479px;
-        border-radius: 0;
-    }
-
-    #form-date {
-        max-width: 470px;
-    }
-
-    .white-button {
-        margin-left: 150px;
-    }
-
-    .main-content {
-        margin-left: 0;
-        padding: 50px 0 0 0;
-        margin: 140px 10px 10px 10px;
-        max-width: 469px;
-    }
-
-    .task {
-        max-width: 469px;
-    }
 }</style>

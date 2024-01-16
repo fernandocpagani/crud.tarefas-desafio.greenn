@@ -2,9 +2,19 @@
   <div id="main-container">
 
     <nav>
-      <div class="date">
-        <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
+
+      <div v-if="1 == 1">
+        <div class="date-view-green">
+          <img src="../../public/dataverde.svg" alt=""> <Label>No prazo</Label>
+        </div>
       </div>
+
+      <div v-else>
+        <div class="date-view-red">
+          <img src="../../public/datavermelho.svg" alt=""> <Label>Vencido</Label>
+        </div>
+      </div>
+
       <div class="buttons-nav-right">
         <form>
 
@@ -12,11 +22,15 @@
             <ul class="main-dropdown">
               <li class="dropdown-hover">
                 <ul class="dropdown">
-                  <li class="black-li"><img src="../../public/copiarlink.svg" alt="copiar link">Copiar link da tarefa
+                  <li class="black-li" @click="copyTask(id)"><img src="../../public/copiarlink.svg"
+                      alt="copiar link">Copiar link da tarefa
                   </li>
+
                   <li class="black-li"><img src="../../public/duplicar.svg" alt="duplicar tarefa">Duplicar tarefa</li>
-                  <li class="black-li" @click="window.print()"><img src="../../public/imprimir.svg"
-                      alt="imprimir">Imprimir tarefa</li>
+
+                  <li class="black-li" @click="printTask(id)"><img src="../../public/imprimir.svg" alt="imprimir">Imprimir
+                    tarefa</li>
+
                   <li class="red-li" @click="deleteTask(id)"><img src="../../public/lixeiravermelha.svg"
                       alt="excluir">Excluir tarefa</li>
                 </ul>
@@ -27,7 +41,7 @@
 
           <button class="x"> <img src="../../public/3pontos.svg" alt="3pontos"></button>
 
-          <button class="x"><img src="../../public/x.svg" alt="x"></button>
+          <a href="/dashboard" class="x"><img src="../../public/x.svg" alt="x"></a>
         </form>
       </div>
     </nav>
@@ -68,9 +82,10 @@
 
               <div class="menu-tasks">
                 <button><router-link :to="'/updatesubtask/' + subtask.id" class="title-task"><img
-                                                src="../../public/lapis.svg" alt="lapis"></router-link></button>
+                      src="../../public/lapis.svg" alt="lapis"></router-link></button>
 
-                <button @click="deleteSubTask(id)" ><img class="item-menu-task2" src="../../public/lixeiracinza.svg" alt="excluir"></button>
+                <button @click="deleteSubTask(id)"><img class="item-menu-task2" src="../../public/lixeiracinza.svg"
+                    alt="excluir"></button>
               </div>
 
             </div>
@@ -83,17 +98,22 @@
       <div class="right-content">
 
         <h4 class="title-right">Criado em</h4>
-        <h5 class="info-black"><img src="../../public/datapreto.svg"
-            alt="calendario-preto">{{ moment(created_at).format('DD/MM/YYYY') }} às {{ moment(created_at).format('HH:mm') }}
+        <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">{{
+          moment(created_at).format('DD/MM/YYYY') }} às {{ moment(created_at).format('HH:mm') }}
         </h5>
 
         <h4 class="title-right">Data de vencimento</h4>
-        <h5 class="info-green"><img src="../../public/dataverde.svg"
-            alt="calendario-verde">{{ moment(finishdate).format('DD/MM/YYYY') }} </h5>
+        <div v-if="finishdate >= moment().format('YYYY-MM-DD')">
+          <h5 class="info-green"><img src="../../public/dataverde.svg" alt="calendario-verde">{{
+            moment(finishdate).format('DD/MM/YYYY') }}
+          </h5>
+        </div>
 
-        <h4 class="title-right">Modificado em</h4>
-        <h5 class="info-black"><img src="../../public/datapreto.svg" alt="calendario-preto">
-          {{ moment(updated_at).format('DD/MM/YYYY') }} às {{ moment(updated_at).format('HH:mm') }} </h5>
+        <div v-else>
+          <h5 class="info-red"><img src="../../public/datavermelho.svg" alt="calendario-vermelho">{{
+            moment(finishdate).format('DD/MM/YYYY') }}
+          </h5>
+        </div>
 
         <h4 class="title-right">ID da tarefa</h4>
         <h5 class="info-black">{{ id }}</h5>
@@ -150,8 +170,24 @@ export default {
 
         })
     }
+    {
+      setTimeout(() => {
+        window.print()
+      }, 1000);
+    }
   },
   methods: {
+
+    async printTask(id) {
+      setTimeout(() => {
+        window.print()
+      }, 1000);
+    },
+
+    async copyTask(id) {
+      await navigator.clipboard.writeText(`http://localhost:8080/modalviewtask/${id}`);
+    },
+
     async deleteTask(id) {
       axios.delete(`http://localhost:8000/api/task/${id}/delete`)
         .then(() => {
@@ -190,6 +226,10 @@ export default {
   width: 819px;
   height: 613px;
   background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 nav {
@@ -225,6 +265,7 @@ nav {
   position: absolute;
   display: none;
   margin-top: 25px;
+  right: 0px;
 }
 
 .dropdown {
@@ -331,6 +372,30 @@ input:checked {
   max-width: 470px;
 }
 
+.red-date {
+  font-size: 14px;
+  color: #d31408;
+  background-color: #d314081a;
+  padding: 4px 7px;
+  width: 125px;
+}
+
+.red-date img {
+  margin-right: 10px;
+}
+
+.green-date {
+  font-size: 14px;
+  color: #009488;
+  background-color: #e5f4f3;
+  padding: 4px 7px;
+  width: 125px;
+}
+
+.green-date img {
+  margin-right: 10px;
+}
+
 .description {
   margin-left: 20px;
   margin-bottom: 0;
@@ -382,7 +447,7 @@ input:checked {
 .menu-tasks {
   display: flex;
   align-items: center;
-  display: block;
+  display: none;
   margin: auto 0;
 }
 
@@ -430,17 +495,27 @@ input:checked {
 }
 
 .info-green {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 17px;
-  text-align: left;
-  margin-bottom: 40px;
-  color: #009488;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: left;
+    margin-bottom: 40px;
+    color: #009488;
+}
+
+.info-red {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: left;
+    margin-bottom: 40px;
+    color: #d31408;
 }
 
 .info-black img,
-.info-green img {
-  margin-right: 10px;
+.info-green img,
+.info-red img {
+    margin-right: 10px;
 }
 
 .form-group input,

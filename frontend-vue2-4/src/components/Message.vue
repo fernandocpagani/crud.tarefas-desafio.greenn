@@ -18,8 +18,8 @@ export default {
 <style scoped>
     .message-container {
         padding: 5px 10px 0px 10px;
-        background-color: #fafafa;     
-        color: #000;
+        background-color: transparent;     
+        color: red;
         align-items: center;
         justify-content: center;
         text-align: center;        

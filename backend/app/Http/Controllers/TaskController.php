@@ -26,17 +26,16 @@ class TaskController extends Controller
         $this->validate($request, [
             'title' =>'required|max:30',            
             'description' =>'required|max:50',           
-            'finishdate' =>'required',           
-            // 'status' =>'',           
+            'finishdate' =>'required',        
+                    
             ]);
 
         $task = new Task;
         $task->title = $request->title;      
         $task->description = $request->description;        
         $task->finishdate = $request->finishdate;        
-        $task->users_id = $request->users_id;     
-        // $task->status = $request->status;        
-
+        $task->users_id = $request->users_id;    
+               
         $task->save();
         return response()->json($task);
     }
@@ -49,8 +48,7 @@ class TaskController extends Controller
         $task = Task::find($id);
         $task->title = $request->title;        
         $task->description = $request->description;        
-        // $task->status = $request->status;  
-                            
+                                  
         $task->save();
 
         return response()->json($task);

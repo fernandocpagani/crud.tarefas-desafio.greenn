@@ -2,10 +2,10 @@
   <div>
     <b-button v-b-modal.modal-sm variant="black">Criar tarefa</b-button>
 
-    <b-modal id="modal-sm" size="sm" title="Small Modal" body-class="p-0"  hide-header hide-footer centered >
+    <b-modal id="modal-sm" size="sm" title="Small Modal" body-class="p-0 " hide-header hide-footer centered>
 
       <form id="form">
-       
+
         <div>
           <input type="name" id="task-name" name="task-name" placeholder="Nome da tarefa" maxlength="30" required
             v-model="title">
@@ -88,9 +88,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-
 body {
   min-height: 100vh;
   display: grid;
@@ -111,6 +108,10 @@ a {
   width: 678px;
   height: 216px;
   background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #task-name {
@@ -200,7 +201,7 @@ a {
 .btn,
 .btn-secondary {
   background-color: transparent;
-  color:#fff
+  color: #fff
 }
 
 .btn:hover,
@@ -211,5 +212,21 @@ a {
 
 .modal-content {
   background-color: transparent;
+}
+
+@media(max-width: 490px) {
+
+  /deep/ #modal-sm {
+    width: 479px;
+    border-radius: 0;
+  }
+
+  form {
+    max-width: 470px;
+  }
+
+  .white-button {
+    margin-left: 150px;
+  }
 }
 </style>

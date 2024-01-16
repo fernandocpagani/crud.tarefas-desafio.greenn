@@ -71,7 +71,7 @@ class SubtaskController extends Controller
 
     public function updateSubtaskStatus($id, Request $request){
         $subtask = Subtask::find($id);                        
-        $subtask->sstatus = $request->sstatus;      
+        $subtask->sstatus = $request->sstatus;  
                  
         $subtask->save();
 

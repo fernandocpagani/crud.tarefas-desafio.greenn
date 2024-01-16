@@ -1,65 +1,79 @@
 <template>
-    <div id=padding-page>
+    <div>
+        <div id=padding-page>
 
-        <Message :msg="msg" v-show="msg" />
+            <div id="main-container">
 
-        <div id="main-container">
+                <div class="left-content">
 
-            <div class="left-content">
+                    <h3 class="title-left-content">Inscreva-se</h3>
 
-                <h3 class="title-left-content">Inscreva-se</h3>
+                    <form>
 
-                <form>
+                        <input type="hidden" name="type" value="login">
 
-                    <input type="hidden" name="type" value="login">
-
-                    <div class="form-group">
-                        <label for="name">Nome completo:</label>
-                        <input type="name" class="form-control" id="name" name="name" placeholder="Nome completo" v-model="name">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Endereço de e-mail:</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="email@email.com.br" v-model="email">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Senha de acesso:</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Min. 6 caracteres" v-model="password" minlength="6">
-                    </div>
-
-                    <div class="buttons">
-                        <router-link to="/">
-                            <button class="white-button">Já tenho conta</button>
-                        </router-link>
-
-                        <div  @click="createUser()">                            
-                            <button class="black-button">Cadastrar</button>
+                        <div class="form-group">
+                            <label for="name">Nome completo:</label>
+                            <input type="name" class="form-control" id="name" name="name" placeholder="Nome completo"
+                                v-model="name" required>
                         </div>
 
+                        <div class="form-group">
+                            <label for="email">Endereço de e-mail:</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="email@email.com.br" v-model="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Senha de acesso:</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Min. 6 caracteres" v-model="password" minlength="6" required>
+                        </div>
+
+                        <div class="buttons">
+                            <router-link to="/">
+                                <button class="white-button">Já tenho conta</button>
+                            </router-link>
+
+                            <div @click="createUser()">
+                                <button class="black-button">Cadastrar</button>
+                            </div>
+
+                        </div>
+
+                        <Message :msg="msg" v-show="msg" />
+
+                    </form>
+
+                </div>
+
+                <div class="right-content">
+
+                    <div class="hand"><img src="../../public/maopng.png" alt="mao"></div>
+
+                    <section class="right-text">
+                        <h3 class="title-right-content">A fortuna fica ao lado daquele que ousa.</h3>
+                        <p class="text-right-content">Todo progresso ocorre fora da zona de conforto.</p>
+                    </section>
+
+                    <div class="images">
+                        <div class="degrade"></div>
+                        <div class="image"></div>
                     </div>
-
-                </form>
-
-            </div>
-
-            <div class="right-content">
-
-                <div class="hand"><img src="../../public/maopng.png" alt="mao"></div>
-
-                <section class="right-text">
-                    <h3 class="title-right-content">A fortuna fica ao lado daquele que ousa.</h3>
-                    <p class="text-right-content">Todo progresso ocorre fora da zona de conforto.</p>
-                </section>
-
-                <div class="images">
-                    <div class="degrade"></div>
-                    <div class="image"></div>
                 </div>
             </div>
-
-
         </div>
+        <footer>
+            <h6>Fernando Códolo Pagani &copy 2024</h6>
+            <a href="https://www.linkedin.com/in/fernandocpagani/" target="_blank"><img class="linkedin"
+                    src="../../public/linkedin.svg" alt="icone linkedin"></a>
+            <a href="https://www.instagram.com/fernandocpagani/" target="_blank"><img class="instagram"
+                    src="../../public/instagram.svg" alt="icone instagram"></a>
+            <a href="https://www.facebook.com/fernando.codolopagani/" target="_blank"><img class="facebook"
+                    src="../../public/facebook.svg" alt="icone facebook"></a>
+            <a href="https://github.com/fernandocpagani" target="_blank"><img class="facebook" src="../../public/github.svg"
+                    alt="icone gihub"></a>
+        </footer>
     </div>
 </template>
 
@@ -78,7 +92,7 @@ export default {
             email: null,
             name: null,
             password: null,
-            msg: null,
+            msg: "",
         }
     },
 
@@ -92,29 +106,72 @@ export default {
                 password: this.password,
             }
 
-            // if (email.value !== password_confirmation.value) {
 
-            //     this.msg = `Email já cadastrado`
-            //     setTimeout(() => this.msg = "", 3000);
 
-            // } else {
-
-                axios.post('http://127.0.0.1:8000/api/auth/register', data)
-                    .then(function (response) {
-                        console.log(response);
-
-                    })
-                    .catch(function (error) {
-                        console.error(error);
+            axios.post('http://localhost:8000/api/auth/register', data)
+                .then(function (response) {
+                    console.log(response.status);
+                    if (response.status == 200) {
                         this.msg = `Não foi possível cadastrar`
-                        setTimeout(() => this.msg = "", 3000);
-                    });
+                    } else {
+                        console.log("deu errado")
+                    }
 
-                    setTimeout(() =>this.msg = "Usuário cadastrado com sucesso!", this.$router.push({ name: "login" }), 3000);
-            }
+                })
+                .catch(function (error) {
+
+                    this.msg = `Não foi possível cadastrar`
+                    setTimeout(() => this.msg = "", 3000);
+                });
+
+            // this.msg = "Usuário cadastrado com sucesso!"
+            // setTimeout(() => this.msg = "", 3000);
+
+            this.email = "";
+            this.name = "";
+            this.password = "";
+            this.confirmpassword = "";
+
+
+
+
+
+
+
+
+            // const user = axios.post('http://127.0.0.1:8000/api/auth/register', data)
+            //     .then(function (response) {
+            //         console.log(response.status);
+            //         // if(response.status === 200){
+            //         //     console.log("deu certo")                      
+            //             return this.msg = `Usuario cadastr`
+
+            //     })
+            //     .catch(function (error) {
+            //         console.error(error);
+            //     });
+
+            //     this.msg = `Não foi possível cadastrar`
+
+            //     if(data.status == 200){
+            //         this.$router.push({ name: "login" })
         }
+        //   if (data.status == "success") {
+        //     console.log("deu certo")
+        //   }else{
+        //      this.msg = `Não foi possível cadastrar`
+        //  setTimeout(() => this.msg = "", 3000);
+        //   }
+
+
+
+        // this.email = "";
+        // this.name = "";
+        // this.password = "";
+
     }
-// }
+}
+
 </script>
 
 <style scoped>
@@ -178,6 +235,7 @@ input {
     margin-top: 9px;
     border: 1px solid #e5e5e5;
     padding-left: 20px;
+    border-radius: 0;
 }
 
 .buttons {
@@ -272,6 +330,75 @@ p {
 .degrade {
     height: 100px;
     width: 100px;
-    background: linear-gradient(270deg, #0000005b 1%, #fff );
+    background: linear-gradient(270deg, #0000005b 1%, #fff);
 }
-</style>
+
+footer {   
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+footer img {
+    margin-left: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+@media(max-width: 490px) {
+
+    #padding-page {
+        max-width: 489px;
+        position: relative;
+        padding: 10px;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+    }
+
+    #main-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .right-content {
+        max-width: 469px;
+        height: 669px;
+    }
+
+    .right-text {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .form-group,
+    .buttons {
+        width: 470px;
+    }
+
+    .images {
+        margin-bottom: 86px;
+    }
+
+    .buttons {
+        margin-bottom: 30px;
+    }
+
+    .title-left-content {
+        max-width: 400px;
+    }
+
+    .right-content {
+        max-width: 489;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .left-content {
+        max-width: 489;
+    }
+
+}</style>

@@ -9,7 +9,7 @@
                     <ModalNewTask />
                 </button>
                 <img class="nav-button2" src="../../public/interrogacao.svg" alt="interrogacao">
-                <img class="nav-button" src="../../public/sino.svg" alt="sino">            
+                <img class="nav-button" src="../../public/sino.svg" alt="sino">
                 <label class="first-letter">{{ name }}</label>
             </div>
         </div>
@@ -26,19 +26,19 @@ export default {
         ModalNewTask
     },
     data() {
-      return {
-          name: null,
-          
-      }
-  },
+        return {
+            name: null,
 
-    mounted() {  
+        }
+    },
 
-let user = localStorage.getItem('user-info');
-this.name= JSON.parse(user).user.name[0].toUpperCase();
-console.log(this.name)
+    mounted() {
 
-}
+        let user = localStorage.getItem('user-info');
+        this.name = JSON.parse(user).user.name[0].toUpperCase();
+        console.log(this.name)
+
+    }
 }
 
 </script>
@@ -94,19 +94,32 @@ nav {
     padding: 0 22.5px;
 }
 
-.first-letter{
-    margin: 0 22.5px; 
+.first-letter {
+    margin: 0 22.5px;
     height: 30px;
     width: 30px;
     background-color: #009488;
     text-align: center;
     color: #fff;
-    font-weight: bold;  
-    border-radius: 100%;  
-    font-size: 20px;    
+    font-weight: bold;
+    border-radius: 100%;
+    font-size: 20px;
 }
 
 .nav-button2 {
     padding: 0 22.5px 0 35px;
+}
+
+@media(max-width: 490px) {
+
+    * {
+        max-width: 489px;
+       
+    }
+
+    nav {
+        max-width: 489px;
+        position: fixed;
+    }
 }
 </style>

@@ -1,55 +1,66 @@
 <template>
-    <div id=padding-page>
-        <div id="main-container">
+    <div>
+        <div id=padding-page>
+            <div id="main-container">
 
-            <div class="left-content">
+                <div class="left-content">
 
-                <div class="hand"><img src="../../public/maopng.png" alt="mao"></div>
+                    <div class="hand"><img src="../../public/maopng.png" alt="mao"></div>
 
-                <section class="left-text">
-                    <h3 class="title-left-content">A fortuna fica ao lado daquele que ousa.</h3>
-                    <p class="text-left-content">Todo progresso ocorre fora da zona de conforto.</p>
-                </section>
+                    <section class="left-text">
+                        <h3 class="title-left-content">A fortuna fica ao lado daquele que ousa.</h3>
+                        <p class="text-left-content">Todo progresso ocorre fora da zona de conforto.</p>
+                    </section>
 
-                <div class="images">
-                    <div class="degrade"></div>
-                    <div class="image"></div>
+                    <div class="images">
+                        <div class="degrade"></div>
+                        <div class="image"></div>
+                    </div>
+                </div>
+
+                <div class="right-content">
+
+                    <h3 class="title-right-content">Login</h3>
+
+                    <form>
+
+                        <input type="hidden" name="type" value="login">
+
+                        <div class="form-group">
+                            <label for="email">Endereço de e-mail:</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="email@email.com.br" required v-model="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Senha de acesso:</label>
+                            <input type="password" class="form-control" id="password" name="password" required
+                                placeholder="Min. 6 caracteres" v-model="password" minlength="6">
+                        </div>
+
+                        <div class="buttons">
+                            <router-link to="/createuser">
+                                <button class="white-button">Não tenho conta</button>
+                            </router-link>
+                            <div>
+                                <input class="black-button" value="Acessar" v-on:click="login">
+                            </div>
+                        </div>
+
+                        <Message :msg="msg" v-show="msg" />
+
+                    </form>
+
                 </div>
             </div>
-
-            <div class="right-content">
-
-                <h3 class="title-right-content">Login</h3>
-
-                <form>
-
-                    <input type="hidden" name="type" value="login">
-
-                    <div class="form-group">
-                        <label for="email">Endereço de e-mail:</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="email@email.com.br"
-                            v-model="email">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Senha de acesso:</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Min. 6 caracteres" v-model="password" minlength="6">
-                    </div>
-
-                    <div class="buttons">
-                        <router-link to="/createuser">
-                            <button class="white-button">Não tenho conta</button>
-                        </router-link>
-                        <div>
-                            <input class="black-button" value="Acessar" v-on:click="login">
-                        </div>
-                    </div>
-
-                </form>
-
-            </div>
         </div>
+        <footer>
+            <h6>Fernando Códolo Pagani &copy 2024</h6> 
+            <a href="https://www.linkedin.com/in/fernandocpagani/" target="_blank"><img class="linkedin" src="../../public/linkedin.svg" alt="icone linkedin"></a>
+            <a  href="https://www.instagram.com/fernandocpagani/" target="_blank"><img class="instagram" src="../../public/instagram.svg" alt="icone instagram"></a>  
+            <a  href="https://www.facebook.com/fernando.codolopagani/" target="_blank"><img class="facebook" src="../../public/facebook.svg" alt="icone facebook"></a>  
+            <a  href="https://github.com/fernandocpagani" target="_blank"><img class="facebook" src="../../public/github.svg" alt="icone gihub"></a> 
+        </footer>
     </div>
 </template>
 
@@ -81,18 +92,6 @@ export default {
                     setTimeout(() => this.msg = "", 3000);
                 })
         },
-
-        mounted() {
-            let user = localStorage.getItem('user-info');
-    this.name= JSON.parse(user).user.name;
-    console.log(this.name)
-    
-            if (user) {
-                this.$router.push({ name: "dashboard" })
-            }
-
-            
-        }
     }
 }
 
@@ -175,7 +174,7 @@ p {
 .degrade {
     height: 100px;
     width: 100px;
-    background: linear-gradient(270deg, #0000005b 1%, #fff );
+    background: linear-gradient(270deg, #0000005b 1%, #fff);
 }
 
 .right-content {
@@ -223,6 +222,7 @@ input {
     margin-top: 9px;
     border: 1px solid #e5e5e5;
     padding-left: 20px;
+    border-radius: 0;
 }
 
 .buttons {
@@ -257,6 +257,8 @@ input {
     line-height: 180%;
     cursor: pointer;
     text-align: center;
+    padding: 0;
+    margin: 0;
 }
 
 .left-content:hover {
@@ -283,4 +285,69 @@ input {
 .left-content:hover .left-text {
     padding-top: 117px;
 }
-</style>
+
+footer {   
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+footer img {
+    margin-left: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+@media(max-width: 490px) {
+
+    #padding-page {
+        max-width: 489px;
+        position: relative;
+        padding: 10px;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+    }
+
+    #main-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .left-content {
+        max-width: 469px;
+        height: 669px;
+        margin: 0;
+    }
+
+    .left-text {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .form-group,
+    .buttons {
+        width: 470px;
+    }
+
+    .images {
+        margin-bottom: 86px;
+    }
+
+    .title-right-content {
+        margin-top: 30px;
+        max-width: 400px;
+    }
+
+    .buttons {
+        margin-bottom: 30px;
+    }
+
+    .right-content {
+        max-width: 469px;
+    }
+
+}</style>

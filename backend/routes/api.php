@@ -43,6 +43,8 @@ Route::get('/task/{id}', [TaskController::class, 'showTask']);
 
 Route::put('/task/{id}/update', [TaskController::class, 'updateTask']);
 
+Route::put('/task/{id}/updatetaskstatus', [TaskController::class, 'updateTaskStatus']);
+
 Route::put('/task/{id}/updatedate', [TaskController::class, 'updateDate']);
 
 Route::delete('/task/{id}/delete', [TaskController::class, 'deleteTask']);
@@ -55,6 +57,8 @@ Route::post('/subtask/register', [SubtaskController::class, 'registerSubtask']);
 Route::get('/subtask/{id}', [SubtaskController::class, 'showSubtask']);
 
 Route::put('/subtask/{id}/update', [SubtaskController::class, 'updateSubtask']);
+
+Route::put('/subtask/{id}/updatesubtaskstatus', [SubtaskController::class, 'updateSubtaskStatus']);
 
 Route::delete('/subtask/{id}/delete', [SubtaskController::class, 'deleteSubtask']);
 
