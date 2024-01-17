@@ -303,6 +303,13 @@ footer img {
 
 @media(max-width: 490px) {
 
+    footer {
+        display: block;
+        text-align: center;
+        position: relative;
+        top: 450px;
+    }
+
     #padding-page {
         max-width: 489px;
         position: relative;

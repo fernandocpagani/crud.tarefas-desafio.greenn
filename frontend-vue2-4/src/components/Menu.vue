@@ -92,13 +92,18 @@ export default {
 }
 
 @media(max-width: 490px) {
-
-    * {
-        max-width: 489px;
-    }
+    
+    .footer-items{
+        margin-top: 15px;
+        display: flex;
+        flex-direction: row;
+        width: 489px;
+        justify-content: space-between;
+        padding: 0 20px;
+    }  
 
     .main-content {
-        height: 70px;
+        height: 90px;
         width: 489px;
         position: fixed;
         top: 70px;
@@ -110,10 +115,9 @@ export default {
         flex-direction: row;
         width: 100%;
         padding: 0;
-        margin: 0;
-        align-items: center;
+        margin: 0;        
         justify-content: space-between;
-        padding: 0 15px;
+        padding: 10px 15px;
     }
 
     .first-menu-button {

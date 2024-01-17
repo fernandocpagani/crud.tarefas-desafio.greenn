@@ -72,14 +72,15 @@
                                                                                 src="../../public/copiarlink.svg"
                                                                                 alt="copiar link"> Copiar link da tarefa
                                                                         </li>
-                                                                        <li class="black-li" @click="duplicateTask(task.id)"><img
+                                                                        <li class="black-li"
+                                                                            @click="duplicateTask(task.id)"><img
                                                                                 src="../../public/duplicar.svg"
                                                                                 alt="duplicar tarefa">Duplicar tarefa</li>
                                                                         <li class="black-li" @click="printTask(task.id)">
                                                                             <img src="../../public/imprimir.svg"
                                                                                 alt="imprimir">Imprimir tarefa
                                                                         </li>
-                                                                        <li class="red-li" @click="deleteTask(id)"><img
+                                                                        <li class="red-li" @click="deleteTask(task.id)"><img
                                                                                 src="../../public/lixeiravermelha.svg"
                                                                                 alt="excluir">Excluir tarefa</li>
                                                                     </ul>
@@ -423,12 +424,12 @@
 
                                     <div>
                                         <input type="name" id="task-name" name="task-name" placeholder="Nome da subtarefa"
-                                            maxlength="30" required v-model="stitle">
+                                            maxlength="30" v-model="stitle">
                                     </div>
 
                                     <div>
                                         <input type="name" id="task-description" name="task-description" maxlength="50"
-                                            placeholder="Descrição" required v-model="sdescription">
+                                            placeholder="Descrição"  v-model="sdescription">
                                     </div>
 
                                     <div class="buttons">
@@ -482,49 +483,49 @@ export default {
             const user = JSON.parse(localStorage.getItem("user-info"))
 
             const resulttask = axios.get(`http://localhost:8000/api/task/${id}`)
-            .then(function (resulttask) {
-            
-            const data = {
-                title: resulttask.data.title,
-                description: resulttask.data.description,
-                finishdate: resulttask.data.finishdate,               
-                users_id: user.user.id,
-            }
-           
-            
-            const result = axios.post('http://localhost:8000/api/task/register', data)
-            .then(function (response) {
-                const taskid = response.data.id
-                
-                const resultsub = axios.get(`http://localhost:8000/api/subtask/taskid/${id}`)
-                .then(function (responsesub) {
-                
-                    
-                    for (let i = 0; i < responsesub.data.length; i++) {
-                        
-                                const datasub = {
-                                    stitle: responsesub.data[i].stitle,
-                                    sdescription: responsesub.data[i].sdescription,
-                                    task_id: taskid,
-                                }
-                                
-                                console.log(datasub)
-                                
-                                const resultsubsend = axios.post('http://localhost:8000/api/subtask/register', datasub)
-                                .then(function (response) {
-                                    console.log(response);
+                .then(function (resulttask) {
+
+                    const data = {
+                        title: resulttask.data.title,
+                        description: resulttask.data.description,
+                        finishdate: resulttask.data.finishdate,
+                        users_id: user.user.id,
+                    }
+
+
+                    const result = axios.post('http://localhost:8000/api/task/register', data)
+                        .then(function (response) {
+                            const taskid = response.data.id
+
+                            const resultsub = axios.get(`http://localhost:8000/api/subtask/taskid/${id}`)
+                                .then(function (responsesub) {
+
+
+                                    for (let i = 0; i < responsesub.data.length; i++) {
+
+                                        const datasub = {
+                                            stitle: responsesub.data[i].stitle,
+                                            sdescription: responsesub.data[i].sdescription,
+                                            task_id: taskid,
+                                        }
+
+                                        console.log(datasub)
+
+                                        const resultsubsend = axios.post('http://localhost:8000/api/subtask/register', datasub)
+                                            .then(function (response) {
+                                                console.log(response);
+                                            })
+
+                                    }
                                 })
-                                
-                            }
                         })
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
+                        .catch(function (error) {
+                            console.error(error);
+                        });
                 })
 
-        //         window.location = window.location;
-        // window.location.reload();
+                    window.location = window.location;
+            window.location.reload();
         },
 
         userId() {
@@ -1421,20 +1422,25 @@ form:hover .dropdown-hover {
 
 @media(max-width: 490px) {
 
-    .modal-sm="'modalnewsubtask' + task.id" {
-        max-width: auto !important;
-        width: 400px
+    .sub-task{
+        width: 269px;
+    }
+    .sub-task-text{
+        width: 200px;
+    }
+    .sub-task-content{
+        width: 469px;
+    }
+ 
+
+    #form, #form-date{
+        width: 480px;
+        margin: auto 0;
+        top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
     }
 
-    /deep/ #modalnewsubtask {
-        width: 479px;
-        border-radius: 0;
-    }
-
-    /deep/ #modalupdatetaskdate {
-        width: 479px;
-        border-radius: 0;
-    }
 
     #form-date {
         max-width: 470px;

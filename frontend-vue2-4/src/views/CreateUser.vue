@@ -41,14 +41,7 @@
 
                         </div>
 
-                        <!-- <Message :msg="msg" v-show="msg" /> -->
-
-                        <div>
-        <div class="message-container">
-            <p :msg="msg" v-show="msg">{{ msg  }} </p>
-        </div>
-    </div>
-
+                        <Message :msg="msg" v-show="msg" />
 
                     </form>
 
@@ -86,15 +79,12 @@
 
 <script>
 import axios from 'axios'
-
+import Message from '../components/Message.vue'
 
 export default {
     name: "CreateUser",
     components: {
-      
-    },
-    props: {
-        msg: String
+        Message
     },
 
     data() {
@@ -116,38 +106,24 @@ export default {
                 password: this.password,
             }
 
-
-
             axios.post('http://localhost:8000/api/auth/register', data)
-          .then(function (response) {
-            console.log(response);
-            return response
-           
+                .then(function (response) {
+                    console.log(response);
+                    this.msg = "Usuário cadastrado com sucesso!"
+                    setTimeout(() => this.msg = "", 3000);
 
-          })
-          .catch(function (error) {
-            console.error(error); 
-          
-        //    this.msg = `Não foi possível cadastrar`
-                  
-          });
+                })
 
-        
-        console.log()
+                .catch(error => {
+                    this.msg = "Usuario não cadastrado"
+                    setTimeout(() => this.msg = "", 3000);
+                })
 
-        if (data.email == null || data.name == null || data.password == null ) {
-            this.msg = `Não foi possível cadastrar` 
-            setTimeout(() => this.msg = "", 3000);
-        } else {
-            this.msg = "Usuário cadastrado com sucesso!"
-            setTimeout(() => this.msg = "", 3000);
+            this.email = "";
+            this.name = "";
+            this.password = "";
         }
-
-        this.email = "";
-        this.name = "";
-        this.password = "";      
-      }
-    }    
+    }
 }
 
 </script>
@@ -311,7 +287,7 @@ p {
     background: linear-gradient(270deg, #0000005b 1%, #fff);
 }
 
-footer {   
+footer {
     display: flex;
     flex-direction: row;
     position: absolute;
@@ -326,16 +302,14 @@ footer img {
     cursor: pointer;
 }
 
-.message-container {
-        padding: 5px 10px 0px 10px;
-        background-color: transparent;     
-        color: red;
-        align-items: center;
-        justify-content: center;
-        text-align: center;        
-    }
-
 @media(max-width: 490px) {
+
+    footer {
+        display: block;
+        text-align: center;
+        position: relative;
+        top: 550px;
+    }
 
     #padding-page {
         max-width: 489px;
@@ -385,7 +359,8 @@ footer img {
     }
 
     .left-content {
-        max-width: 489;
+        max-width: 489px;
     }
 
-}</style>
+}
+</style>
