@@ -26,9 +26,8 @@ class TaskController extends Controller
         $this->validate($request, [
             'title' =>'required|max:30',            
             'description' =>'required|max:50',           
-            'finishdate' =>'required',        
-                    
-            ]);
+            'finishdate' =>'required', 
+        ]);
 
         $task = new Task;
         $task->title = $request->title;      
@@ -77,4 +76,5 @@ class TaskController extends Controller
         $user->delete();
         return response()->json("deletado com sucesso", 200);
     }
+    
 }

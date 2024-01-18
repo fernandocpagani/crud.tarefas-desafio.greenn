@@ -22,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+// USER
+
 Route::post('/auth/register', [AuthController::class, 'register']);
 
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -34,6 +37,8 @@ Route::put('/user/{id}/update', [UserController::class, 'updateUser']);
 
 Route::delete('/user/{id}/delete', [UserController::class, 'deleteUser']);
 
+
+// TASK
 
 Route::get('/task', [TaskController::class, 'showAllTask']);
 
@@ -49,6 +54,8 @@ Route::put('/task/{id}/updatedate', [TaskController::class, 'updateDate']);
 
 Route::delete('/task/{id}/delete', [TaskController::class, 'deleteTask']);
 
+
+// SUBTASK
 
 Route::get('/subtask', [SubtaskController::class, 'showAllSubtask']);
 
